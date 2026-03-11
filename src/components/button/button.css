@@ -1,0 +1,21 @@
+.hds-button {
+  padding: var(--hds-spacing-sm) 14px;
+  border-radius: var(--hds-radius-sm);
+  border: none;
+  cursor: pointer;
+}
+
+.hds-button[data-style="primary"] {
+  background: var(--hds-color-primary);
+  color: white;
+}
+
+.hds-button[data-style="secondary"] {
+  background: var(--hds-color-secondary);
+  color: white;
+}
+
+.hds-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
