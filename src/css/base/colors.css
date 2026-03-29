@@ -1,0 +1,9 @@
+:root {
+  --hds-color-primary: var(--color-primary);
+  --hds-color-primary-accent: var(--color-primary-accent);
+  --hds-color-secondary: var(--color-secondary);
+  --hds-color-success: var(--color-success);
+  --hds-color-danger: var(--color-danger);
+  --hds-color-warning: var(--color-warning);
+  --hds-color-info: var(--color-info);
+}
