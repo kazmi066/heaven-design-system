@@ -1,96 +1,175 @@
-/* 
-    Raw primitives: color scales, font, space scale, radius, typography sizes
-*/
+/*
+ * Heaven Design System — Tokens
+ * All design tokens with hds-* prefix
+ */
 
 :root {
-  --color-primary: #007bff;
-  --color-secondary: #6c757d;
+  /* ═══════════════════════════════════════════════════════
+     COLORS — Brand & Semantic
+  ═══════════════════════════════════════════════════════ */
+  --hds-color-accent: #3559c7;
+  --hds-color-primary: #00ffb7;
+  --hds-color-secondary: #6c757d;
+  --hds-color-success: #28a745;
+  --hds-color-danger: #dc3545;
+  --hds-color-warning: #ffc107;
+  --hds-color-info: #17a2b8;
 
-  --color-success: #28a745;
-  --color-danger: #dc3545;
-  --color-warning: #ffc107;
-  --color-info: #17a2b8;
+  /* Text colors */
+  --hds-color-text: #0c1a3d;
+  --hds-color-text-weak: #36434a;
+  --hds-color-text-weaker: #667680;
+  --hds-color-text-weakest: #b2babf;
+  --hds-color-text-on-accent: #ffffff;
+  --hds-color-text-error: #d24023;
+  --hds-color-text-danger: #b23015;
+  --hds-color-text-success: #117627;
+  --hds-color-text-neutral: #55595d;
+  --hds-color-text-neutral-strong: #11181c;
+  --hds-color-text-warning: #946900;
+  --hds-color-text-warning-strong: #332810;
+  --hds-color-text-highlight: #793aaf;
+  --hds-color-text-info: #3451b2;
+  --hds-color-text-progress: #016d83;
+
+  /* Border colors */
+  --hds-color-border: #d8dee4;
+  --hds-color-border-strong: #bcc5cc;
+  --hds-color-border-neutral: #d7dce0;
+  --hds-color-border-warning: #f8d87c;
+  --hds-color-border-highlight: #e3ccf4;
+  --hds-color-border-danger: #fac7be;
+  --hds-color-border-success: #b7dfba;
+  --hds-color-border-info: #c6d4f9;
+  --hds-color-border-progress: #b0e5ee;
+  --hds-color-border-hover: #667680;
+
+  /* Surface/UI colors */
+  --hds-color-surface: #ffffff;
+  --hds-color-surface-hover: #f6f8f8;
+  --hds-color-surface-active: rgb(246, 248, 248);
+  --hds-color-header: rgb(246, 248, 248);
+
+  /* Icon colors */
+  --hds-color-icon: rgb(102, 118, 128);
+  --hds-color-icon-hover: rgb(12, 26, 61);
 
   /* ═══════════════════════════════════════════════════════
      TYPOGRAPHY — Font families
   ═══════════════════════════════════════════════════════ */
-  --font-fallback:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-family: Arial;
-  --font-title: robotoLight;
-  --font-family-monospace: "Droid Sans Mono", "Courier New", monospace;
+  --hds-font-family:
+    Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --hds-font-family-title: robotoLight, Arial, sans-serif;
+  --hds-font-family-monospace: "Droid Sans Mono", "Courier New", monospace;
 
-  /* Font size scale */
-  --step--1: clamp(
-    0.8rem,
-    0.7541rem + 0.2041vw,
-    0.9377rem
-  ); /* Step -1: 12.8px → 15.0038px */
-  --step-0: clamp(
-    1rem,
-    0.9167rem + 0.3704vw,
-    1.25rem
-  ); /* Step 0: 16px → 20px */
-  --step-1: clamp(
-    1.25rem,
-    1.1113rem + 0.6167vw,
-    1.6663rem
-  ); /* Step 1: 20px → 26.66px */
-  --step-2: clamp(
-    1.5625rem,
-    1.343rem + 0.9757vw,
-    2.2211rem
-  ); /* Step 2: 25px → 35.5378px */
-  --step-3: clamp(
-    1.9531rem,
-    1.6173rem + 1.4928vw,
-    2.9607rem
-  ); /* Step 3: 31.25px → 47.3719px */
-  --step-4: clamp(
-    2.4414rem,
-    1.9397rem + 2.23vw,
-    3.9467rem
-  ); /* Step 4: 39.0625px → 63.1467px */
-  --step-5: clamp(
-    3.0518rem,
-    2.3154rem + 3.2728vw,
-    5.2609rem
-  ); /* Step 5: 48.8281px → 84.1745px */
-  --step-6: clamp(
-    3.8147rem,
-    2.7487rem + 4.7379vw,
-    7.0128rem
-  ); /* Step 6: 61.0352px → 112.2047px */
+  /* Font size scale (fluid) */
+  --hds-font-size-xs: clamp(0.8rem, 0.7541rem + 0.2041vw, 0.9377rem);
+  --hds-font-size-sm: clamp(0.875rem, 0.8125rem + 0.2604vw, 1rem);
+  --hds-font-size-base: clamp(1rem, 0.9167rem + 0.3704vw, 1.25rem);
+  --hds-font-size-md: clamp(1.125rem, 1rem + 0.5208vw, 1.5rem);
+  --hds-font-size-lg: clamp(1.25rem, 1.1113rem + 0.6167vw, 1.6663rem);
+  --hds-font-size-xl: clamp(1.5625rem, 1.343rem + 0.9757vw, 2.2211rem);
+  --hds-font-size-2xl: clamp(1.9531rem, 1.6173rem + 1.4928vw, 2.9607rem);
+  --hds-font-size-3xl: clamp(2.4414rem, 1.9397rem + 2.23vw, 3.9467rem);
+  --hds-font-size-4xl: clamp(3.0518rem, 2.3154rem + 3.2728vw, 5.2609rem);
+  --hds-font-size-5xl: clamp(3.8147rem, 2.7487rem + 4.7379vw, 7.0128rem);
 
   /* Font weights */
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+  --hds-font-weight-regular: 400;
+  --hds-font-weight-medium: 500;
+  --hds-font-weight-semibold: 600;
+  --hds-font-weight-bold: 700;
 
   /* Line heights */
-  --line-height-none: 1;
-  --line-height-tight: 1.25;
-  --line-height-snug: 1.375;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.625;
-  --line-height-loose: 2;
+  --hds-line-height-none: 1;
+  --hds-line-height-tight: 1.25;
+  --hds-line-height-snug: 1.375;
+  --hds-line-height-normal: 1.5;
+  --hds-line-height-relaxed: 1.625;
+  --hds-line-height-loose: 2;
 
-  /* Space scale */
-  --space-2xs: clamp(0.5rem, 0.4375rem + 0.2083vw, 0.625rem);
-  --space-xs: clamp(0.75rem, 0.6563rem + 0.3125vw, 0.9375rem);
-  --space-s: clamp(1rem, 0.875rem + 0.4167vw, 1.25rem);
-  --space-m: clamp(1.5rem, 1.3125rem + 0.625vw, 1.875rem);
-  --space-l: clamp(2rem, 1.75rem + 0.8333vw, 2.5rem);
-  --space-xl: clamp(3rem, 2.625rem + 1.25vw, 3.75rem);
+  /* Letter spacing */
+  --hds-letter-spacing-tight: -0.025em;
+  --hds-letter-spacing-normal: 0;
+  --hds-letter-spacing-wide: 0.025em;
+
+  /* ═══════════════════════════════════════════════════════
+     SPACING — Fluid scale
+  ═══════════════════════════════════════════════════════ */
+  --hds-space-2xs: clamp(0.5rem, 0.4375rem + 0.2083vw, 0.625rem);
+  --hds-space-xs: clamp(0.75rem, 0.6563rem + 0.3125vw, 0.9375rem);
+  --hds-space-sm: clamp(1rem, 0.875rem + 0.4167vw, 1.25rem);
+  --hds-space-md: clamp(1.5rem, 1.3125rem + 0.625vw, 1.875rem);
+  --hds-space-lg: clamp(2rem, 1.75rem + 0.8333vw, 2.5rem);
+  --hds-space-xl: clamp(3rem, 2.625rem + 1.25vw, 3.75rem);
+  --hds-space-2xl: clamp(4rem, 3.5rem + 1.6667vw, 5rem);
+
   /* One-up pairs */
-  --space-2xs-xs: clamp(0.5rem, 0.2813rem + 0.7292vw, 0.9375rem);
-  --space-xs-s: clamp(0.75rem, 0.5rem + 0.8333vw, 1.25rem);
-  --space-s-m: clamp(1rem, 0.5625rem + 1.4583vw, 1.875rem);
-  --space-m-l: clamp(1.5rem, 1rem + 1.6667vw, 2.5rem);
-  --space-l-xl: clamp(2rem, 1.125rem + 2.9167vw, 3.75rem);
+  --hds-space-2xs-xs: clamp(0.5rem, 0.2813rem + 0.7292vw, 0.9375rem);
+  --hds-space-xs-sm: clamp(0.75rem, 0.5rem + 0.8333vw, 1.25rem);
+  --hds-space-sm-md: clamp(1rem, 0.5625rem + 1.4583vw, 1.875rem);
+  --hds-space-md-lg: clamp(1.5rem, 1rem + 1.6667vw, 2.5rem);
+  --hds-space-lg-xl: clamp(2rem, 1.125rem + 2.9167vw, 3.75rem);
 
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
+  /* ═══════════════════════════════════════════════════════
+     RADIUS
+  ═══════════════════════════════════════════════════════ */
+  --hds-radius-none: 0;
+  --hds-radius-sm: 4px;
+  --hds-radius-md: 8px;
+  --hds-radius-lg: 16px;
+  --hds-radius-xl: 24px;
+  --hds-radius-full: 9999px;
+
+  /* ═══════════════════════════════════════════════════════
+     SHADOWS
+  ═══════════════════════════════════════════════════════ */
+  --hds-shadow-sm: 0 1px 3px rgba(12, 12, 12, 0.09);
+  --hds-shadow-md: 0 1px 5px rgba(12, 12, 12, 0.05);
+
+  /* ═══════════════════════════════════════════════════════
+     DARK MODE SHADOWS
+  ═══════════════════════════════════════════════════════ */
+  --hds-shadow-dark-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --hds-shadow-dark-md: 0 1px 5px rgba(0, 0, 0, 0.15);
+
+  /* ═══════════════════════════════════════════════════════
+     Z-INDEX SCALE
+  ═══════════════════════════════════════════════════════ */
+  --hds-z-0: 0;
+  --hds-z-10: 10;
+  --hds-z-20: 20;
+  --hds-z-30: 30;
+  --hds-z-40: 40;
+  --hds-z-50: 50;
+  --hds-z-60: 60;
+  --hds-z-70: 70;
+  --hds-z-80: 80;
+  --hds-z-90: 90;
+
+  /* ═══════════════════════════════════════════════════════
+     MOTION — Duration & Easing
+  ═══════════════════════════════════════════════════════ */
+  --hds-duration-instant: 0ms;
+  --hds-duration-fast: 100ms;
+  --hds-duration-normal: 200ms;
+  --hds-duration-slow: 300ms;
+  --hds-duration-slower: 500ms;
+
+  --hds-ease-linear: linear;
+  --hds-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --hds-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --hds-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --hds-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ═══════════════════════════════════════════════════════
+     LAYOUT
+  ═══════════════════════════════════════════════════════ */
+  --hds-max-width-sm: 640px;
+  --hds-max-width-md: 768px;
+  --hds-max-width-lg: 1024px;
+  --hds-max-width-xl: 1280px;
+  --hds-max-width-2xl: 1536px;
+
+  --hds-max-line-length: 65ch;
 }

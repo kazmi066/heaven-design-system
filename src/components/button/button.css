@@ -1,18 +1,18 @@
 .hds-button {
-  padding: var(--hds-spacing-sm) 14px;
+  padding: var(--hds-space-sm) var(--hds-space-md);
   border-radius: var(--hds-radius-sm);
   border: none;
   cursor: pointer;
 }
 
 .hds-button[data-style="primary"] {
-  background: var(--hds-color-primary);
-  color: white;
+  background-color: var(--hds-color-accent);
+  color: var(--hds-color-text-on-accent);
 }
 
 .hds-button[data-style="secondary"] {
-  background: var(--hds-color-secondary);
-  color: white;
+  background-color: var(--hds-color-primary);
+  color: var(--hds-color-text);
 }
 
 .hds-button:disabled {
