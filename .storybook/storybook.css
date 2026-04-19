@@ -1,0 +1,227 @@
+/*
+ * Shared styles for Storybook preview canvas & docs.
+ * Used by Welcome + Foundations showcase stories.
+ * Prefixed with .sb- to avoid clashing with component styles.
+ */
+
+.sb-page {
+  font-family:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  color: var(--hds-color-text);
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+  line-height: 1.55;
+}
+
+.sb-page h1,
+.sb-page h2,
+.sb-page h3 {
+  color: var(--hds-color-text);
+  letter-spacing: -0.01em;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+.sb-page h1 {
+  font-size: 2.25rem;
+  margin-top: 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.sb-page h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--hds-color-border);
+}
+.sb-page h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.sb-page p {
+  color: var(--hds-color-text-weak);
+  margin: 0.5rem 0 1rem;
+}
+.sb-page code {
+  font-family:
+    "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+  font-size: 0.85em;
+  background: #f2f4f7;
+  border: 1px solid var(--hds-color-border);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  color: var(--hds-color-text);
+}
+
+.sb-hero {
+  background:
+    radial-gradient(
+      1200px 400px at 10% -10%,
+      rgba(53, 89, 199, 0.15),
+      transparent 60%
+    ),
+    radial-gradient(
+      800px 300px at 90% 0%,
+      rgba(0, 255, 183, 0.15),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%);
+  border: 1px solid var(--hds-color-border);
+  border-radius: 16px;
+  padding: 3rem 2.25rem;
+  margin-bottom: 2rem;
+}
+.sb-hero .sb-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  color: var(--hds-color-secondary);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+.sb-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 0.75rem;
+}
+.sb-hero p {
+  max-width: 60ch;
+  font-size: 1.05rem;
+}
+
+.sb-grid {
+  display: grid;
+  gap: 1rem;
+}
+.sb-grid.cols-2 {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+.sb-grid.cols-3 {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+.sb-grid.cols-4 {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.sb-card {
+  border: 1px solid var(--hds-color-border);
+  border-radius: 10px;
+  padding: 1rem;
+  background: #fff;
+}
+.sb-card .sb-card-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0 0 0.25rem;
+}
+.sb-card .sb-card-meta {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--hds-color-text-weaker);
+  margin: 0;
+}
+
+/* Color swatches */
+.sb-swatch {
+  height: 72px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  margin-bottom: 0.65rem;
+}
+
+/* Spacing / radius visual boxes */
+.sb-box {
+  background: var(--hds-color-accent);
+  opacity: 0.12;
+  border: 1px dashed var(--hds-color-accent);
+  border-radius: 4px;
+}
+.sb-box-inner {
+  background: var(--hds-color-accent);
+  height: 24px;
+  border-radius: 4px;
+}
+
+/* Type specimen */
+.sb-type-row {
+  display: grid;
+  grid-template-columns: 110px 90px 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--hds-color-border);
+}
+.sb-type-row:last-child {
+  border-bottom: none;
+}
+.sb-type-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--hds-color-text-weaker);
+}
+
+/* Shadow card */
+.sb-shadow-card {
+  height: 100px;
+  border-radius: 10px;
+  background: #fff;
+}
+
+/* Motion */
+.sb-motion-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--hds-color-accent);
+}
+
+/* Table-ish list */
+.sb-list {
+  border: 1px solid var(--hds-color-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.sb-list-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1rem;
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid var(--hds-color-border);
+  font-size: 0.9rem;
+}
+.sb-list-row:last-child {
+  border-bottom: none;
+}
+.sb-list-row code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--hds-color-secondary);
+}
+
+.sb-tagline-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+.sb-tag {
+  border: 1px solid var(--hds-color-border);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  color: var(--hds-color-text-weak);
+  background: #fff;
+}
+
+/* Component showcase blocks (used by component stories) */
+.sb-showcase {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}

@@ -2,7 +2,11 @@
 const config = {
   stories: ["../src/**/*.stories.js"],
 
-  addons: ["@storybook/addon-links", "@storybook/addon-a11y"],
+  addons: [
+    "@storybook/addon-links",
+    "@storybook/addon-a11y",
+    "@storybook/addon-docs",
+  ],
 
   framework: {
     name: "@storybook/html-vite",
