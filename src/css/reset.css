@@ -18,8 +18,7 @@ Kilian Valkhof = https://kilianvalkhof.com/2022/css-html/your-css-reset-needs-te
 
 html {
   color-scheme: light dark;
-  /* Remove the automatic text size adjustment that is provided by iOS. */
-  text-size-adjust: none;
+  text-size-adjust: none; /* Remove the automatic text size adjustment that is provided by iOS. */
 }
 
 body {
