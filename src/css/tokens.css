@@ -21,15 +21,15 @@
   --hds-color-text-weaker: #667680;
   --hds-color-text-weakest: #b2babf;
   --hds-color-text-on-accent: #ffffff;
-  --hds-color-text-error: #d24023;
-  --hds-color-text-danger: #b23015;
-  --hds-color-text-success: #117627;
+  --hds-color-text-on-error: #ffffff;
+  --hds-color-text-on-danger: #ffffff;
+  --hds-color-text-on-success: #ffffff;
   --hds-color-text-neutral: #55595d;
   --hds-color-text-neutral-strong: #11181c;
-  --hds-color-text-warning: #946900;
-  --hds-color-text-warning-strong: #332810;
+  --hds-color-text-on-warning: #ffffff;
+  --hds-color-text-on-warning-strong: #332810;
   --hds-color-text-highlight: #793aaf;
-  --hds-color-text-info: #3451b2;
+  --hds-color-text-on-info: #ffffff;
   --hds-color-text-progress: #016d83;
 
   /* Border colors */
@@ -43,6 +43,12 @@
   --hds-color-border-info: #c6d4f9;
   --hds-color-border-progress: #b0e5ee;
   --hds-color-border-hover: #667680;
+
+  /* Border styles */
+  --hds-border-style-solid: solid;
+  --hds-border-style-none: none;
+  --hds-border-style-dashed: dashed;
+  --hds-border-style-dotted: dotted;
 
   /* Surface/UI colors */
   --hds-color-surface: #ffffff;
@@ -172,4 +178,11 @@
   --hds-max-width-2xl: 1536px;
 
   --hds-max-line-length: 65ch;
+
+  /* ═══════════════════════════════════════════════════════
+     Transitions
+  ═══════════════════════════════════════════════════════ */
+  --hds-transition-slow: 300ms;
+  --hds-transition-medium: 400ms;
+  --hds-transition-fast: 500ms;
 }

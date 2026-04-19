@@ -1,5 +1,4 @@
 const template = document.createElement("template");
-import "./button.css";
 
 template.innerHTML = `
   <style>
@@ -14,44 +13,78 @@ template.innerHTML = `
     .hds-button {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      border: 1px solid transparent;
-      border-radius: var(--hds-radius-sm, 4px);
+      gap: var(--hds-space-2xs);
+      border: 1px var(--hds-border-style-solid) var(--hds-color-border);
+      border-radius: var(--hds-radius-sm);
       padding: 0.625rem 1rem;
-      font: inherit;
+      font-family: var(--hds-font-family);
       cursor: pointer;
-    }
+      background: var(--hds-color-accent);
+      transition-property: background, opacity, color, border-color;
+      transition-duration: var(--hds-transition-slow);
+      transition-timing-function: var(--hds-ease-in);
+      text-decoration: none;
 
-    .hds-button[data-variant="default"] {
-      background: var(--hds-color-accent, #3559c7);
-      color: var(--hds-color-text-on-accent, #fff);
-    }
+      &:hover {
+        filter: brightness(93%);
+      }
 
-    .hds-button[data-variant="secondary"] {
-      background: var(--hds-color-surface, #fff);
-      color: var(--hds-color-text, #0c1a3d);
-      border-color: var(--hds-color-border, #d8dee4);
-    }
+      &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
 
-    .hds-button[data-size="s"] {
-      padding: 0.45rem 0.75rem;
-      font-size: 0.875rem;
-    }
+      &[data-variant="default"] {
+        background: var(--hds-color-accent);
+        color: var(--hds-color-text-on-accent);
+      }
 
-    .hds-button[data-size="m"] {
-      padding: 0.625rem 1rem;
-      font-size: 1rem;
-    }
+      &[data-variant="secondary"] {
+        background: var(--hds-color-surface);
+        color: var(--hds-color-text);
+        border-color: var(--hds-color-border);
+      }
 
-    .hds-button[data-size="l"] {
-      padding: 0.8rem 1.25rem;
-      font-size: 1.0625rem;
-    }
+      &[data-variant="success"] {
+        background: var(--hds-color-success);
+        color: var(--hds-color-text-on-success);
+      }
 
-    .hds-button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-      pointer-events: none;
+      &[data-variant="danger"] {
+        background: var(--hds-color-danger);
+        color: var(--hds-color-text-on-danger);
+      }
+
+      &[data-variant="info"] {
+        background: var(--hds-color-info);
+        color: var(--hds-color-text-on-info);
+      }
+
+      &[data-variant="warning"] {
+        background: var(--hds-color-warning);
+        color: var(--hds-color-text-on-warning);
+      }
+
+      &[data-variant="error"] {
+        background: var(--hds-color-danger);
+        color: var(--hds-color-text-on-error);
+      }
+
+      &[data-size="s"] {
+        padding: 0.45rem 0.75rem;
+        font-size: var(--hds-font-size-sm);
+      }
+
+      &[data-size="m"] {
+        padding: 0.625rem 1rem;
+        font-size: var(--hds-font-size-base);
+      }
+
+      &[data-size="l"] {
+        padding: 0.8rem 1.25rem;
+        font-size: var(--hds-font-size-md);
+      }
     }
   </style>
   <button class="hds-button" part="button">
