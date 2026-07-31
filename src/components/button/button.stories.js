@@ -14,6 +14,8 @@ const button = (args) => `
     size="${args.size}"
     type="${args.type}"
     ${args.disabled ? "disabled" : ""}
+    ${args.loading ? "loading" : ""}
+    ${args.loadingLabel ? `loading-label="${args.loadingLabel}"` : ""}
   >${args.icon ? STAR_ICON : ""}${args.label ?? "Button"}</hds-button>`;
 
 const showcase = (children) =>
@@ -41,6 +43,16 @@ const meta = {
       table: { defaultValue: { summary: "button" } },
     },
     disabled: { control: "boolean" },
+    loading: {
+      control: "boolean",
+      description:
+        "Marks the action as busy, shows a spinner, and prevents repeat clicks.",
+    },
+    loadingLabel: {
+      control: "text",
+      description: "Status text shown while the button is loading.",
+      table: { defaultValue: { summary: "Loading…" } },
+    },
     icon: {
       control: "boolean",
       description: "Storybook-only: render a leading icon via slot=\"start\".",
@@ -68,6 +80,8 @@ export const Playground = {
     size: "m",
     type: "button",
     disabled: false,
+    loading: false,
+    loadingLabel: "Loading…",
     icon: false,
     label: "Button",
   },
@@ -119,7 +133,7 @@ export const States = {
   parameters: {
     docs: {
       description: {
-        story: "Default and disabled states across variants.",
+        story: "Default, disabled, and loading states across variants.",
       },
     },
   },
@@ -135,7 +149,37 @@ export const States = {
           (v) => `<hds-button variant="${v}" disabled>${v}</hds-button>`,
         ).join(""),
       )}
+      ${showcase(
+        VARIANTS.map(
+          (v) =>
+            `<hds-button variant="${v}" loading loading-label="Saving…">${v}</hds-button>`,
+        ).join(""),
+      )}
     </div>`,
+};
+
+/* ─────────────────────────────────────────────
+ * Loading
+ * ───────────────────────────────────────────── */
+export const Loading = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Set `loading` while an async action is pending, then remove it when the action settles. `loading-label` can describe the specific operation.",
+      },
+    },
+  },
+  render: () =>
+    showcase(`
+      <hds-button loading>Continue</hds-button>
+      <hds-button variant="secondary" loading loading-label="Uploading…">
+        Upload file
+      </hds-button>
+      <hds-button variant="success" loading loading-label="Saving…">
+        Save changes
+      </hds-button>
+    `),
 };
 
 /* ─────────────────────────────────────────────
