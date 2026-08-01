@@ -23,18 +23,20 @@ html {
 
 body {
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html,
+  body {
+    scroll-behavior: smooth;
+  }
 }
 
 html,
 body {
-  /* Smooth scrolling IF user doesn't have a preference due to motion sensitivities. */
-  @media (prefers-reduced-motion: no-preference) {
-    scroll-behavior: smooth;
-  }
-
   background-color: var(--hds-color-background);
   color: var(--hds-color-foreground);
-  /* min-block-size: 100vh; */
 }
 
 ul,
@@ -42,10 +44,29 @@ ol {
   list-style: none;
 }
 
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
@@ -65,7 +86,10 @@ dd {
 
 /* Make images easier to work with */
 img,
-picture {
-  max-width: 100%;
+picture,
+video,
+canvas,
+svg {
   display: block;
+  max-width: 100%;
 }
