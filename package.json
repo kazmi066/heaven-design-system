@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^10.2.17",
@@ -13,6 +14,7 @@
     "@storybook/html": "^10.2.17",
     "@storybook/html-vite": "^10.2.17",
     "@types/bun": "latest",
-    "storybook": "^10.2.17"
+    "storybook": "^10.2.17",
+    "typescript": "^7.0.2"
   }
 }

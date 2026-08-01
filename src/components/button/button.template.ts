@@ -1,4 +1,9 @@
-export const css = () => `
+import type {
+  ButtonState,
+  ButtonTemplateArgs,
+} from "./button.types.js";
+
+export const css = (): string => `
   <style>
     :host {
       display: inline-block;
@@ -143,13 +148,12 @@ export const html = ({
   disabled = false,
   loading = false,
   loadingLabel = "Loading…",
-} = {}) => {
+}: ButtonTemplateArgs = {}): string => {
   const isUnavailable = disabled || loading;
 
   return `
     <button
       class="hds-button"
-      part="button"
       data-variant="${variant}"
       data-size="${size}"
       type="${type}"
@@ -158,16 +162,15 @@ export const html = ({
     >
       <span class="hds-button__content">
         <slot name="start"></slot>
-        <span part="label"><slot></slot></span>
+        <span><slot></slot></span>
         <slot name="end"></slot>
       </span>
-      <span class="hds-button__loading" part="loading" role="status">
+      <span class="hds-button__loading" role="status">
         <span
           class="hds-button__spinner"
-          part="spinner"
           aria-hidden="true"
         ></span>
-        <span part="loading-label" data-loading-label>
+        <span data-loading-label>
           ${loadingLabel}
         </span>
       </span>
@@ -176,29 +179,33 @@ export const html = ({
 };
 
 const Template = {
-  render(args = {}) {
+  render(args: ButtonTemplateArgs = {}): string {
     return `
       ${css()}
       ${html(args)}
     `;
   },
 
-  update(root, { variant, size, type, disabled, loading, loadingLabel }) {
-    const button = root.querySelector(".hds-button");
-    const label = root.querySelector("[data-loading-label]");
+  update(root: ShadowRoot, state: ButtonState): void {
+    const button = root.querySelector<HTMLButtonElement>(".hds-button");
+    const label = root.querySelector<HTMLElement>("[data-loading-label]");
 
-    button.dataset.variant = variant;
-    button.dataset.size = size;
-    button.type = type;
-    button.disabled = disabled || loading;
+    if (!button || !label) {
+      throw new Error("Button template is missing required elements.");
+    }
 
-    if (loading) {
+    button.dataset.variant = state.variant;
+    button.dataset.size = state.size;
+    button.type = state.type;
+    button.disabled = state.disabled || state.loading;
+
+    if (state.loading) {
       button.setAttribute("aria-busy", "true");
     } else {
       button.removeAttribute("aria-busy");
     }
 
-    label.textContent = loadingLabel;
+    label.textContent = state.loadingLabel;
   },
 };
 

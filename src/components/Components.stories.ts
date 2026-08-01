@@ -1,4 +1,6 @@
-export default {
+import type { Meta, StoryObj } from "@storybook/html";
+
+const meta = {
   title: "Components/Overview",
   parameters: {
     layout: "fullscreen",
@@ -6,9 +8,12 @@ export default {
     docs: { disable: true },
   },
   tags: ["!autodocs"],
-};
+} satisfies Meta;
 
-export const Overview = {
+export default meta;
+type Story = StoryObj;
+
+export const Overview: Story = {
   render: () => `
     <main class="sb-page">
       <h1>Components</h1>

@@ -5,7 +5,6 @@
     "moduleResolution": "Bundler",
     "strict": true,
     "lib": ["ES2022", "DOM"],
-    "types": ["storybook__html"],
     "skipLibCheck": true
   },
   "include": ["src", ".storybook"]
