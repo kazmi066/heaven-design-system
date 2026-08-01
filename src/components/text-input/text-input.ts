@@ -90,6 +90,26 @@ export class HdsTextInput extends HTMLElement {
     }
   }
 
+  get validity(): ValidityState {
+    return this._input.validity;
+  }
+
+  get validationMessage(): string {
+    return this._input.validationMessage;
+  }
+
+  get willValidate(): boolean {
+    return this._input.willValidate;
+  }
+
+  checkValidity(): boolean {
+    return this._input.checkValidity();
+  }
+
+  reportValidity(): boolean {
+    return this._input.reportValidity();
+  }
+
   override focus(options?: FocusOptions): void {
     this._input.focus(options);
   }

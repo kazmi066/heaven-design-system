@@ -4,6 +4,8 @@
  */
 
 :root {
+  color-scheme: light;
+
   /* ═══════════════════════════════════════════════════════
      COLORS — Brand & Semantic
   ═══════════════════════════════════════════════════════ */
@@ -185,4 +187,63 @@
   --hds-transition-slow: 300ms;
   --hds-transition-medium: 400ms;
   --hds-transition-fast: 500ms;
+}
+
+/* ═══════════════════════════════════════════════════════
+   DARK THEME — Semantic token overrides
+═══════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Brand & semantic colors */
+  --hds-color-accent: #8aa4ff;
+  --hds-color-primary: #00dba0;
+  --hds-color-secondary: #94a3b8;
+  --hds-color-success: #4ade80;
+  --hds-color-danger: #fb7185;
+  --hds-color-warning: #fbbf24;
+  --hds-color-info: #38bdf8;
+
+  /* Text colors */
+  --hds-color-text: #f8fafc;
+  --hds-color-text-weak: #cbd5e1;
+  --hds-color-text-weaker: #94a3b8;
+  --hds-color-text-weakest: #64748b;
+  --hds-color-text-on-accent: #111827;
+  --hds-color-text-on-error: #4c0519;
+  --hds-color-text-on-danger: #4c0519;
+  --hds-color-text-on-success: #052e16;
+  --hds-color-text-neutral: #cbd5e1;
+  --hds-color-text-neutral-strong: #f8fafc;
+  --hds-color-text-on-warning: #422006;
+  --hds-color-text-on-warning-strong: #422006;
+  --hds-color-text-highlight: #d8b4fe;
+  --hds-color-text-on-info: #082f49;
+  --hds-color-text-progress: #67e8f9;
+
+  /* Border colors */
+  --hds-color-border: #334155;
+  --hds-color-border-strong: #475569;
+  --hds-color-border-neutral: #334155;
+  --hds-color-border-warning: #a16207;
+  --hds-color-border-highlight: #7e22ce;
+  --hds-color-border-danger: #be123c;
+  --hds-color-border-success: #15803d;
+  --hds-color-border-info: #0369a1;
+  --hds-color-border-progress: #0e7490;
+  --hds-color-border-hover: #64748b;
+
+  /* Surface/UI colors */
+  --hds-color-surface: #0f172a;
+  --hds-color-surface-hover: #1e293b;
+  --hds-color-surface-active: #263449;
+  --hds-color-header: #111827;
+
+  /* Icon colors */
+  --hds-color-icon: #94a3b8;
+  --hds-color-icon-hover: #f8fafc;
+
+  /* Shadows */
+  --hds-shadow-sm: var(--hds-shadow-dark-sm);
+  --hds-shadow-md: var(--hds-shadow-dark-md);
 }

@@ -1,9 +1,21 @@
 import "../src/css/main.css";
 import "./storybook.css";
+import { withThemeByDataAttribute } from "@storybook/addon-themes";
 import theme from "./theme.js";
 
 /** @type { import('@storybook/html-vite').Preview } */
 const preview = {
+  decorators: [
+    withThemeByDataAttribute({
+      themes: {
+        light: "light",
+        dark: "dark",
+      },
+      defaultTheme: "light",
+      attributeName: "data-theme",
+    }),
+  ],
+
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },
 
@@ -16,16 +28,6 @@ const preview = {
     },
 
     layout: "centered",
-
-    backgrounds: {
-      default: "Surface",
-      values: [
-        { name: "Surface", value: "#ffffff" },
-        { name: "App", value: "#f7f8fa" },
-        { name: "Muted", value: "#eef1f5" },
-        { name: "Inverse", value: "#0c1a3d" },
-      ],
-    },
 
     options: {
       storySort: {
@@ -65,4 +67,4 @@ const preview = {
 };
 
 export default preview;
-export const { parameters, tags } = preview;
+export const { decorators, parameters, tags } = preview;

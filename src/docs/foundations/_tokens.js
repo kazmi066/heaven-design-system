@@ -17,7 +17,11 @@ import raw from "../../css/tokens.css?raw";
  * ───────────────────────────────────────────── */
 const tokenRe = /--hds-([a-z0-9-]+)\s*:\s*([^;]+);/gi;
 const all = [];
+const seen = new Set();
 for (let m; (m = tokenRe.exec(raw)) !== null; ) {
+  if (seen.has(m[1])) continue;
+
+  seen.add(m[1]);
   all.push({
     name: m[1], // e.g. "color-accent"
     token: `--hds-${m[1]}`, // e.g. "--hds-color-accent"

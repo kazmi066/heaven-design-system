@@ -38,7 +38,7 @@ export const Tokens = {
         .sb-motion-track {
           position: relative;
           height: 48px;
-          background: #f2f4f7;
+          background: var(--hds-color-surface-active);
           border-radius: 999px;
           overflow: hidden;
         }

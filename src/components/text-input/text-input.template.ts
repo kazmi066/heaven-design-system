@@ -193,14 +193,16 @@ const Template = {
 
     const hasError = Boolean(state.errorMessage);
 
-    error.textContent = state.errorMessage;
-    error.hidden = !hasError;
     input.setCustomValidity(state.errorMessage);
 
     if (hasError) {
+      error.hidden = false;
+      error.textContent = state.errorMessage;
       input.setAttribute("aria-invalid", "true");
       input.setAttribute("aria-describedby", error.id);
     } else {
+      error.textContent = "";
+      error.hidden = true;
       input.removeAttribute("aria-invalid");
       input.removeAttribute("aria-describedby");
     }

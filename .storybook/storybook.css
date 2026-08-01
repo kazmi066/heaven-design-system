@@ -4,6 +4,13 @@
  * Prefixed with .sb- to avoid clashing with component styles.
  */
 
+html,
+body,
+.sb-show-main {
+  background-color: var(--hds-color-surface);
+  color: var(--hds-color-text);
+}
+
 .sb-page {
   font-family:
     "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
@@ -49,7 +56,7 @@
     "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo,
     monospace;
   font-size: 0.85em;
-  background: #f2f4f7;
+  background: var(--hds-color-surface-active);
   border: 1px solid var(--hds-color-border);
   padding: 0.1rem 0.35rem;
   border-radius: 4px;
@@ -60,15 +67,19 @@
   background:
     radial-gradient(
       1200px 400px at 10% -10%,
-      rgba(53, 89, 199, 0.15),
+      color-mix(in srgb, var(--hds-color-accent) 15%, transparent),
       transparent 60%
     ),
     radial-gradient(
       800px 300px at 90% 0%,
-      rgba(0, 255, 183, 0.15),
+      color-mix(in srgb, var(--hds-color-primary) 15%, transparent),
       transparent 60%
     ),
-    linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%);
+    linear-gradient(
+      180deg,
+      var(--hds-color-surface) 0%,
+      var(--hds-color-surface-hover) 100%
+    );
   border: 1px solid var(--hds-color-border);
   border-radius: 16px;
   padding: 3rem 2.25rem;
@@ -109,7 +120,7 @@
   border: 1px solid var(--hds-color-border);
   border-radius: 10px;
   padding: 1rem;
-  background: #fff;
+  background: var(--hds-color-surface);
 }
 .sb-card .sb-card-title {
   font-weight: 600;
@@ -127,7 +138,7 @@
 .sb-swatch {
   height: 72px;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--hds-color-border);
   margin-bottom: 0.65rem;
 }
 
@@ -166,7 +177,7 @@
 .sb-shadow-card {
   height: 100px;
   border-radius: 10px;
-  background: #fff;
+  background: var(--hds-color-surface);
 }
 
 /* Motion */
@@ -215,7 +226,7 @@
   padding: 0.25rem 0.65rem;
   font-size: 0.75rem;
   color: var(--hds-color-text-weak);
-  background: #fff;
+  background: var(--hds-color-surface);
 }
 
 /* Component showcase blocks (used by component stories) */
