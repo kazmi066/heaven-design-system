@@ -5,7 +5,6 @@ export interface RadioInputState {
   ariaLabel: string;
   checked: boolean;
   disabled: boolean;
-  required: boolean;
 }
 
 export interface RadioInputTemplateIds {

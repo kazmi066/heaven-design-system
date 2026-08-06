@@ -110,7 +110,6 @@ export const html = ({
   ariaLabel = "",
   checked = false,
   disabled = false,
-  required = false,
   controlId = "hds-radio-input-control",
   labelId = "hds-radio-input-label",
 }: RadioInputTemplateArgs = {}): string => `
@@ -124,7 +123,6 @@ export const html = ({
       ${label ? `aria-labelledby="${labelId}"` : attribute("aria-label", ariaLabel)}
       ${checked ? "checked" : ""}
       ${disabled ? "disabled" : ""}
-      ${required ? "required" : ""}
     />
     <span
       class="hds-radio-input__label"
@@ -170,7 +168,6 @@ const Template = {
     input.value = state.value;
     input.checked = state.checked;
     input.disabled = state.disabled;
-    input.required = state.required;
 
     setStringAttribute(input, "name", state.name);
     setStringAttribute(input, "aria-label", state.label ? "" : state.ariaLabel);

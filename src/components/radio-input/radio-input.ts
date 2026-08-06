@@ -11,7 +11,6 @@ export class HdsRadioInput extends HTMLElement {
     "aria-label",
     "checked",
     "disabled",
-    "required",
   ];
 
   private _input?: HTMLInputElement;
@@ -109,36 +108,8 @@ export class HdsRadioInput extends HTMLElement {
     this.setAttribute("value", String(value));
   }
 
-  get validity(): ValidityState {
-    return this.input.validity;
-  }
-
-  get validationMessage(): string {
-    return this.input.validationMessage;
-  }
-
-  get willValidate(): boolean {
-    return this.input.willValidate;
-  }
-
-  checkValidity(): boolean {
-    return this.input.checkValidity();
-  }
-
-  reportValidity(): boolean {
-    return this.input.reportValidity();
-  }
-
   override focus(options?: FocusOptions): void {
     this._input?.focus(options);
-  }
-
-  private get input(): HTMLInputElement {
-    if (!this._input) {
-      throw new Error("Radio input is not connected.");
-    }
-
-    return this._input;
   }
 
   private get state(): RadioInputState {
@@ -149,7 +120,6 @@ export class HdsRadioInput extends HTMLElement {
       ariaLabel: this.getAttribute("aria-label") || "",
       checked: this.checked,
       disabled: this.disabled,
-      required: this.hasAttribute("required"),
     };
   }
 

@@ -9,7 +9,6 @@ const radioInput = ({
   ariaLabel = "",
   checked = false,
   disabled = false,
-  required = false,
 }: RadioInputStoryArgs): string => `
   <hds-radio-input
     label="${label}"
@@ -18,7 +17,6 @@ const radioInput = ({
     ${ariaLabel ? `aria-label="${ariaLabel}"` : ""}
     ${checked ? "checked" : ""}
     ${disabled ? "disabled" : ""}
-    ${required ? "required" : ""}
   ></hds-radio-input>
 `;
 
@@ -35,13 +33,12 @@ const meta = {
     },
     checked: { control: "boolean" },
     disabled: { control: "boolean" },
-    required: { control: "boolean" },
   },
   parameters: {
     docs: {
       description: {
         component:
-          "`hds-radio-input` lets someone choose one option from a named set. Give every option in a set the same `name` and a distinct `value`.",
+          "`hds-radio-input` lets someone choose one option from a named set. Give every option the same `name`, a distinct `value`, and mark the first option as `checked` so the group always starts with a selection.",
       },
     },
   },
@@ -56,9 +53,8 @@ export const Playground: Story = {
     name: "delivery",
     value: "standard",
     ariaLabel: "",
-    checked: false,
+    checked: true,
     disabled: false,
-    required: false,
   },
   render: radioInput,
 };
@@ -68,7 +64,7 @@ export const Group: Story = {
     docs: {
       description: {
         story:
-          "The native inputs remain in the outer form. The browser handles same-name grouping, keyboard interaction, required validity, and submitted values.",
+          "The first option starts checked. The native inputs remain in the outer form, so the browser handles same-name grouping, keyboard interaction, and submitted values.",
       },
     },
   },
@@ -83,7 +79,6 @@ export const Group: Story = {
           name="delivery"
           value="standard"
           checked
-          required
         ></hds-radio-input>
         <hds-radio-input
           label="Express — next day"
@@ -103,10 +98,10 @@ export const Group: Story = {
 export const States: Story = {
   render: () => `
     <div style="display: grid; gap: 0.75rem; min-width: 14rem;">
-      <hds-radio-input label="Default" name="default-state"></hds-radio-input>
-      <hds-radio-input label="Checked" name="checked-state" checked></hds-radio-input>
+      <hds-radio-input label="Selected" name="default-state" checked></hds-radio-input>
+      <hds-radio-input label="Not selected" name="default-state"></hds-radio-input>
+      <hds-radio-input label="Disabled and selected" name="disabled-state" checked disabled></hds-radio-input>
       <hds-radio-input label="Disabled" name="disabled-state" disabled></hds-radio-input>
-      <hds-radio-input label="Disabled and checked" name="disabled-checked-state" checked disabled></hds-radio-input>
     </div>
   `,
 };
