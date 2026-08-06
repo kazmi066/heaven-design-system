@@ -16,7 +16,7 @@ export const Introduction = {
         <p class="sb-eyebrow">Heaven Design System</p>
         <h1>A calm, composable UI kit built with Web Components.</h1>
         <p>
-          HDS is a learning-first design system — zero frameworks, zero
+          HDS is a learning-first design system, zero frameworks, zero
           build-step lock-in. Tokens drive the theme, Web Components deliver
           the behavior, and Storybook is the documentation surface.
         </p>
@@ -68,7 +68,7 @@ export const Introduction = {
           </div>
           <div class="sb-list-row">
             <code>Foundations</code>
-            <span>Design tokens — the single source of truth.</span>
+            <span>Design tokens, the single source of truth.</span>
           </div>
           <div class="sb-list-row">
             <code>Components / *</code>
@@ -83,7 +83,7 @@ export const Introduction = {
 
       <section>
         <h2>Getting started</h2>
-        <p>Use the sidebar to navigate. Each component exposes a <strong>Playground</strong> story — use the <em>Controls</em> panel to explore props live.</p>
+        <p>Use the sidebar to navigate. Each component exposes a <strong>Playground</strong> story, use the <em>Controls</em> panel to explore props live.</p>
       </section>
     </main>
   `,

@@ -15,9 +15,7 @@ const swatches = (items, prefix = "color-") => `
   </div>`;
 
 const section = (title, items) =>
-  items.length
-    ? `<h2>${title}</h2>${swatches(items)}`
-    : "";
+  items.length ? `<h2>${title}</h2>${swatches(items)}` : "";
 
 export default {
   title: "Foundations/Colors",
@@ -33,7 +31,7 @@ export const Palette = {
   render: () => `
     <main class="sb-page">
       <h1>Colors</h1>
-      <p>All color tokens are exposed as CSS custom properties. Use semantic tokens in components — avoid hard-coding hex values. This page reads from <code>src/css/tokens.css</code> directly, so edits there show up here automatically.</p>
+      <p>All color tokens are exposed as CSS custom properties. Use semantic tokens in components, avoid hard-coding hex values. This page reads from <code>src/css/tokens.css</code> directly, so edits there show up here automatically.</p>
 
       ${section("Brand", colors.brand)}
       ${section("Semantic", colors.semantic)}

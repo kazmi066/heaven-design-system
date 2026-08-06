@@ -3,7 +3,7 @@
  *
  * Parses src/css/tokens.css at build time (Vite `?raw`) and groups every
  * `--hds-*` custom property by name prefix. Foundation stories import the
- * groups from here — when you add, rename, or delete a token in tokens.css,
+ * groups from here, when you add, rename, or delete a token in tokens.css,
  * the stories update automatically. No duplication.
  *
  * The underscore prefix (_tokens.js) keeps Storybook from picking this file
@@ -66,7 +66,7 @@ export const letterSpacings = by((t) => t.name.startsWith("letter-spacing-"));
 export const fontFamilies = by((t) => t.name.startsWith("font-family"));
 
 /* ─────────────────────────────────────────────
- * Spacing — single tokens vs one-up pairs
+ * Spacing, single tokens vs one-up pairs
  *   "space-md"    -> scale
  *   "space-sm-md" -> pair
  * ───────────────────────────────────────────── */

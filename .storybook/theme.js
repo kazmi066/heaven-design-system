@@ -1,8 +1,7 @@
 import { create } from "storybook/theming/create";
 
 /**
- * Heaven Design System — Storybook brand theme
- * Inspired by Nord DS / Vercel Geist — calm, minimal, dev-grade.
+ * Heaven Design System, Storybook brand theme
  */
 export default create({
   base: "light",

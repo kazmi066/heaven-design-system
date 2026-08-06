@@ -19,8 +19,8 @@ export const Overview: Story = {
       <h1>Components</h1>
       <p>
         Every HDS component is a Web Component prefixed with <code>hds-</code>.
-        Components consume design tokens from <strong>Foundations</strong> —
-        never hard-coded values — so theming happens in one place.
+        Components consume design tokens from <strong>Foundations</strong>,
+        never hard-coded values, so theming happens in one place.
       </p>
 
       <h2>Story conventions</h2>
@@ -39,7 +39,7 @@ export const Overview: Story = {
         </div>
         <div class="sb-list-row">
           <code>States</code>
-          <span>Default, hover, focus, disabled, loading — where applicable.</span>
+          <span>Default, hover, focus, disabled, loading, where applicable.</span>
         </div>
         <div class="sb-list-row">
           <code>With Icon / Composition</code>

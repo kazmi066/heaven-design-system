@@ -75,18 +75,18 @@ export const Group: Story = {
           Delivery speed
         </legend>
         <hds-radio-input
-          label="Standard — 3 to 5 days"
+          label="Standard, 3 to 5 days"
           name="delivery"
           value="standard"
           checked
         ></hds-radio-input>
         <hds-radio-input
-          label="Express — next day"
+          label="Express, next day"
           name="delivery"
           value="express"
         ></hds-radio-input>
         <hds-radio-input
-          label="Pickup — today"
+          label="Pickup, today"
           name="delivery"
           value="pickup"
         ></hds-radio-input>
