@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(npx skills find unslop 2 >& 1)",
+      "Shell(npx skills add cursor/plugins@unslop -g -y 2 >& 1)"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

@@ -1,128 +1,41 @@
-# Fixing "Failed to fetch dynamically imported module" in Storybook + Vite
+# Heaven Design System
 
-This error usually happens when Vite cannot properly load a story file in Storybook v10 with HTML templates.
+Heaven is a design system written in plain HTML and CSS, documented in Storybook.
 
----
+## Components
 
-## 1. Check Your Storybook Stories Path
+- Badge
+- Button
+- Checkbox input
+- Radio input
+- Text input
+- Textarea input
 
-Open `.storybook/main.js` and make sure the stories path is simple:
+Each component lives in its own folder under `src/components` with a template, constants, types, and stories.
 
-```js
-/** @type { import('@storybook/html-vite').StorybookConfig } */
-const config = {
-  stories: ["../src/**/*.stories.js"],
+## Foundations
 
-  addons: ["@storybook/addon-links", "@storybook/addon-a11y"],
+Design tokens are documented under `src/docs/foundations`: colors, typography, spacing, radius, shadows, motion, and z-index.
 
-  framework: {
-    name: "@storybook/html-vite",
-    options: {},
-  },
-};
+## Running Storybook
 
-export default config;
-```
-
-## 2. Ensure File Extensions Are Explicit
-
-Because "type": "module" is in your package.json, Node ESM requires file extensions.
-
-Correct:
-
-import { HdsButton } from './button.html.js'
-
-Incorrect:
-
-```js
-import { HdsButton } from "./button.html";
-```
-
-## 3. Verify Story File Structure
-
-src/components/button/button.stories.js should be like:
-
-import { HdsButton } from './button.html.js'
-import './button.css'
-
-export default {
-title: 'Components/Button'
-}
-
-export const Primary = {
-args: {
-label: 'Primary Button',
-style: 'primary'
-},
-
-render: (args) => HdsButton(args)
-}
-
-Important:
-
-- Must have `export default`
-- Must have at least one named export
-- `render` should return HTML string
-
-## 4. Verify Template File
-
-src/components/button/button.html.js:
-
-```js
-export const HdsButton = (args = {}) => /*html*/ `
-<button
-  class="hds-button"
-  ${args.style ? `data-style="${args.style}"` : ""}
->
-  ${args.label || "Button"}
-</button>
-`;
-```
-
-## 5. Clear Vite Cache
-
-Stop Storybook and run:
+Storybook runs on Bun.
 
 ```bash
-rm -rf node_modules/.vite
 bun install
 bun storybook
 ```
 
-## 6. Debug with a Simple Story
+Open http://localhost:6006 to browse the components.
 
-Temporarily simplify a story to confirm loading works:
+To build a static version:
 
-```js
-export const Test = {
-  render: () => `<button>Test</button>`,
-};
+```bash
+bun run build-storybook
 ```
 
-If this works, the problem is in your template import.
+The build outputs to `storybook-static/`.
 
-## 7. Optional: Add Empty Root Module
+## Deployment
 
-Create src/index.js:
-
-```js
-export {};
-```
-
-Some Vite setups require a root module.
-
-## 8. Browser Console
-
-If errors persist, check the browser dev console for:
-
-- `Failed to resolve import ...`
-
-This will show the exact file causing the issue.
-
-✅ Following these steps should resolve the "Failed to fetch dynamically imported module" error.
-
----
-
-I can also make a **full ready-to-copy `.storybook` + `button` folder structure in JS** that works out of the box with Storybook v10 + Bun + HTML templates, so you can just run it.
-
-Do you want me to do that next?
+Pushes to `main` build the storybook and deploy it to GitHub Pages. The workflow is in `.github/workflows/deploy-storybook.yml`.
