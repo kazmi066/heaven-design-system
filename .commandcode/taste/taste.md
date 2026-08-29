@@ -17,3 +17,8 @@ See [web-components/taste.md](web-components/taste.md)
 
 # accessibility
 - Validation error message element should be part of the component, hidden via `display:none` when empty (no reserved space), and connected with unique per-instance IDs, `aria-describedby`, `aria-invalid`, and a live `role="alert"`. Confidence: 0.70
+
+# commit messages
+- Write commit messages that sound natural and human ("humanly"), with a concise description; avoid AI-slop phrasing. Confidence: 0.80
+- Use the `unslop` skill when drafting commit messages. Confidence: 0.80
+- Keep commit descriptions generic; don't name design-inspiration sources (e.g., drop mentions of Vercel, say "styled chevron" instead of "Vercel-style chevron"). Confidence: 0.65

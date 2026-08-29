@@ -7,3 +7,7 @@
 - Minimize `??` nullish-coalescing operators in code. Confidence: 0.60
 - Design-system components should be generic and minimal, without baked-in domain-specific logic (e.g., don't add number-formatting logic to a badge); let consumers supply the content. Confidence: 0.70
 - Express component variants as color changes (e.g., a `negative` color), not as formatting or border-behavior changes. Confidence: 0.65
+- Build new components by mirroring the established component pattern exactly; don't write extra code beyond the existing practices unless something isn't achievable with them. Confidence: 0.75
+- Components should take full width wherever placed (e.g., `:host { display: block }` and `width: 100%` on the control). Confidence: 0.70
+- Form controls should support disabled and validation states (including exposing the native validity API). Confidence: 0.60
+- Component interface look is inspired by Vercel's minimal aesthetic. Confidence: 0.60
