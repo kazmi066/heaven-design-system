@@ -13,7 +13,12 @@ body,
 
 .sb-page {
   font-family:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
     sans-serif;
   color: var(--hds-color-text);
   max-width: 960px;
@@ -235,4 +240,39 @@ body,
   flex-wrap: wrap;
   gap: 0.75rem;
   align-items: center;
+}
+
+/* Form grouping in component stories */
+.sb-form-sections {
+  display: grid;
+  gap: var(--hds-space-lg);
+  width: min(22rem, 80vw);
+}
+
+.sb-fieldset {
+  display: grid;
+  gap: var(--hds-space-sm);
+  width: min(22rem, 80vw);
+  margin: 0;
+  border: 0;
+  padding: 0;
+  min-inline-size: 0;
+  color: var(--hds-color-text);
+  font-family: var(--hds-font-family);
+}
+
+.sb-form-sections > .sb-fieldset,
+.sb-validation-form .sb-fieldset {
+  width: 100%;
+}
+
+.sb-fieldset > legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0 0 var(--hds-space-sm);
+  color: var(--hds-color-text);
+  font-size: var(--hds-font-size-sm);
+  font-weight: var(--hds-font-weight-semibold);
+  line-height: var(--hds-line-height-tight);
 }

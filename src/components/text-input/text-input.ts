@@ -24,7 +24,9 @@ export class HdsTextInput extends HTMLElement {
 
   private readonly root: ShadowRoot;
   private readonly _input: HTMLInputElement;
+  private readonly _toggle: HTMLButtonElement;
   private _value?: string;
+  private _passwordVisible = false;
 
   constructor() {
     super();
@@ -37,21 +39,27 @@ export class HdsTextInput extends HTMLElement {
       errorId: `hds-text-input-${instanceId}-error`,
     });
     const input = this.root.querySelector<HTMLInputElement>("input");
+    const toggle = this.root.querySelector<HTMLButtonElement>(
+      "[data-password-toggle]",
+    );
 
-    if (!input) {
+    if (!input || !toggle) {
       throw new Error("Text input control is unavailable.");
     }
 
     this._input = input;
+    this._toggle = toggle;
   }
 
   connectedCallback(): void {
     this._input.addEventListener("input", this.handleInput);
+    this._toggle.addEventListener("click", this.handleToggle);
     this.sync();
   }
 
   disconnectedCallback(): void {
     this._input.removeEventListener("input", this.handleInput);
+    this._toggle.removeEventListener("click", this.handleToggle);
   }
 
   attributeChangedCallback(
@@ -61,6 +69,10 @@ export class HdsTextInput extends HTMLElement {
   ): void {
     if (name === "value") {
       this._value = newValue ?? "";
+    }
+
+    if (name === "type" && newValue !== "password") {
+      this._passwordVisible = false;
     }
 
     if (this.root.hasChildNodes()) {
@@ -126,6 +138,7 @@ export class HdsTextInput extends HTMLElement {
       value: this._value ?? this.getAttribute("value") ?? "",
       ariaLabel: this.getAttribute("aria-label") || "",
       errorMessage: this.errorMessage,
+      passwordVisible: this._passwordVisible,
       disabled: this.hasAttribute("disabled"),
       readonly: this.hasAttribute("readonly"),
       required: this.hasAttribute("required"),
@@ -136,6 +149,15 @@ export class HdsTextInput extends HTMLElement {
     if (event.target instanceof HTMLInputElement) {
       this._value = event.target.value;
     }
+  };
+
+  private readonly handleToggle = (): void => {
+    if (this.getAttribute("type") !== "password") {
+      return;
+    }
+
+    this._passwordVisible = !this._passwordVisible;
+    this.sync();
   };
 
   private sync(): void {

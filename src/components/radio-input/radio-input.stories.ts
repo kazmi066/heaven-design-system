@@ -70,10 +70,8 @@ export const Group: Story = {
   },
   render: () => `
     <form>
-      <fieldset style="display: grid; gap: 0.75rem; min-width: 18rem; border: 0; padding: 0; color: var(--hds-color-text); font-family: var(--hds-font-family);">
-        <legend style="margin-bottom: 0.75rem; font-weight: var(--hds-font-weight-semibold);">
-          Delivery speed
-        </legend>
+      <fieldset class="sb-fieldset">
+        <legend>Delivery speed</legend>
         <hds-radio-input
           label="Standard, 3 to 5 days"
           name="delivery"
@@ -97,11 +95,17 @@ export const Group: Story = {
 
 export const States: Story = {
   render: () => `
-    <div style="display: grid; gap: 0.75rem; min-width: 14rem;">
-      <hds-radio-input label="Selected" name="default-state" checked></hds-radio-input>
-      <hds-radio-input label="Not selected" name="default-state"></hds-radio-input>
-      <hds-radio-input label="Disabled and selected" name="disabled-state" checked disabled></hds-radio-input>
-      <hds-radio-input label="Disabled" name="disabled-state" disabled></hds-radio-input>
+    <div class="sb-form-sections">
+      <fieldset class="sb-fieldset">
+        <legend>Selection</legend>
+        <hds-radio-input label="Selected" name="default-state" checked></hds-radio-input>
+        <hds-radio-input label="Not selected" name="default-state"></hds-radio-input>
+      </fieldset>
+      <fieldset class="sb-fieldset">
+        <legend>Disabled</legend>
+        <hds-radio-input label="Disabled and selected" name="disabled-state" checked disabled></hds-radio-input>
+        <hds-radio-input label="Disabled" name="disabled-state" disabled></hds-radio-input>
+      </fieldset>
     </div>
   `,
 };

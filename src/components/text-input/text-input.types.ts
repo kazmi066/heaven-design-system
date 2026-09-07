@@ -15,6 +15,7 @@ export interface TextInputState {
   value: string;
   ariaLabel: string;
   errorMessage: string;
+  passwordVisible: boolean;
   disabled: boolean;
   readonly: boolean;
   required: boolean;
@@ -28,4 +29,6 @@ export interface TextInputTemplateIds {
 export type TextInputTemplateArgs = Partial<TextInputState> &
   Partial<TextInputTemplateIds>;
 
-export type TextInputStoryArgs = Partial<TextInputState>;
+export type TextInputStoryArgs = Partial<
+  Omit<TextInputState, "passwordVisible">
+>;

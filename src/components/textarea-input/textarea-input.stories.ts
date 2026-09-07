@@ -77,13 +77,14 @@ export const Playground: Story = {
 
 export const States: Story = {
   render: () => `
-    <div style="display: grid; gap: 1rem; width: min(22rem, 80vw);">
+    <fieldset class="sb-fieldset">
+      <legend>States</legend>
       <hds-textarea-input label="Default" placeholder="Enter a message"></hds-textarea-input>
       <hds-textarea-input label="Required" placeholder="Required field" required></hds-textarea-input>
       <hds-textarea-input label="Invalid Field" value="Too short." error-message="Enter at least 10 characters."></hds-textarea-input>
       <hds-textarea-input label="Readonly" value="Read-only value" readonly></hds-textarea-input>
       <hds-textarea-input label="Disabled" value="Disabled value" disabled></hds-textarea-input>
-    </div>
+    </fieldset>
   `,
 };
 

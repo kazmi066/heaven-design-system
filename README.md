@@ -8,6 +8,8 @@ Heaven is a design system written in plain HTML and CSS, documented in Storybook
 - Button
 - Checkbox input
 - Radio input
+- Range input
+- Select input
 - Text input
 - Textarea input
 

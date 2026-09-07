@@ -52,7 +52,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "`hds-text-input` provides a labeled text-entry control with an accessible validation error region.",
+          "`hds-text-input` is a labeled text-entry control with an accessible validation error region. Password fields include a Show and Hide control next to the label.",
       },
     },
   },
@@ -79,13 +79,46 @@ export const Playground: Story = {
 
 export const States: Story = {
   render: () => `
-    <div style="display: grid; gap: 1rem; width: min(22rem, 80vw);">
+    <fieldset class="sb-fieldset">
+      <legend>States</legend>
       <hds-text-input label="Default" placeholder="Enter a value"></hds-text-input>
       <hds-text-input label="Required" placeholder="Required field" required></hds-text-input>
       <hds-text-input label="Invalid Field" value="not-an-email" error-message="Enter a valid email address"></hds-text-input>
       <hds-text-input label="Readonly" value="Read-only value" readonly></hds-text-input>
       <hds-text-input label="Disabled" value="Disabled value" disabled></hds-text-input>
-    </div>
+    </fieldset>
+  `,
+};
+
+export const Password: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Password fields include a Show and Hide control next to the label. The button points at the input with `aria-controls` and announces the new label through `aria-live`. Keep it out of compact inline forms, where the extra control crowds the row.",
+      },
+    },
+  },
+  render: () => `
+    <fieldset class="sb-fieldset">
+      <legend>Password</legend>
+      <hds-text-input
+        label="Password"
+        type="password"
+        name="password"
+        autocomplete="current-password"
+        value="letmein"
+      ></hds-text-input>
+      <hds-text-input
+        label="Password"
+        type="password"
+        name="password-error"
+        autocomplete="current-password"
+        value="letmein"
+        required
+        error-message="Password is required"
+      ></hds-text-input>
+    </fieldset>
   `,
 };
 
@@ -155,23 +188,26 @@ const validationExample = (): HTMLFormElement => {
       its unique IDs and ARIA relationships update.
     </p>
 
-    <hds-text-input
-      label="Email address"
-      type="email"
-      name="email"
-      placeholder="name@example.com"
-      autocomplete="email"
-      required
-    ></hds-text-input>
+    <fieldset class="sb-fieldset">
+      <legend>Profile</legend>
+      <hds-text-input
+        label="Email address"
+        type="email"
+        name="email"
+        placeholder="name@example.com"
+        autocomplete="email"
+        required
+      ></hds-text-input>
 
-    <hds-text-input
-      label="Display name"
-      type="text"
-      name="displayName"
-      placeholder="Awais"
-      autocomplete="name"
-      required
-    ></hds-text-input>
+      <hds-text-input
+        label="Display name"
+        type="text"
+        name="displayName"
+        placeholder="Awais"
+        autocomplete="name"
+        required
+      ></hds-text-input>
+    </fieldset>
 
     <button class="sb-validation-form__submit" type="submit">
       Validate form

@@ -81,14 +81,15 @@ export const Playground: Story = {
 
 export const States: Story = {
   render: () => `
-    <div style="display: grid; gap: 0.75rem; min-width: 18rem;">
+    <fieldset class="sb-fieldset">
+      <legend>States</legend>
       <hds-checkbox-input label="Unchecked"></hds-checkbox-input>
       <hds-checkbox-input label="Checked" checked></hds-checkbox-input>
       <hds-checkbox-input label="Partially selected" indeterminate></hds-checkbox-input>
       <hds-checkbox-input label="Disabled" disabled></hds-checkbox-input>
       <hds-checkbox-input label="Disabled and checked" checked disabled></hds-checkbox-input>
       <hds-checkbox-input label="Required agreement" required error-message="You must accept before continuing."></hds-checkbox-input>
-    </div>
+    </fieldset>
   `,
 };
 

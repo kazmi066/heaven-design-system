@@ -87,7 +87,8 @@ export const Playground: Story = {
 
 export const States: Story = {
   render: () => `
-    <div style="display: grid; gap: 1rem; width: min(22rem, 80vw);">
+    <fieldset class="sb-fieldset">
+      <legend>States</legend>
       <hds-select-input label="Default" placeholder="Select an option">
         <option value="one">One</option>
         <option value="two">Two</option>
@@ -109,7 +110,7 @@ export const States: Story = {
         <option value="one">One</option>
         <option value="two">Two</option>
       </hds-select-input>
-    </div>
+    </fieldset>
   `,
 };
 
