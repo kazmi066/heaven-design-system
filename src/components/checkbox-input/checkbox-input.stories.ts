@@ -108,9 +108,8 @@ const indeterminateExample = (): HTMLElement => {
     <button type="button">Toggle mixed state</button>
   `;
 
-  const checkbox = example.querySelector<HdsCheckboxInput>(
-    "hds-checkbox-input",
-  );
+  const checkbox =
+    example.querySelector<HdsCheckboxInput>("hds-checkbox-input");
   const button = example.querySelector<HTMLButtonElement>("button");
 
   if (!checkbox || !button) {

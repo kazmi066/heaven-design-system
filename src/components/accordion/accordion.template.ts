@@ -152,11 +152,10 @@ const Template = {
       throw new Error("Accordion markup is unavailable.");
     }
 
-    const rows = items.map(
-      (_, index) =>
-        container.children[index] instanceof HTMLDetailsElement
-          ? (container.children[index] as HTMLDetailsElement)
-          : createRow(index),
+    const rows = items.map((_, index) =>
+      container.children[index] instanceof HTMLDetailsElement
+        ? (container.children[index] as HTMLDetailsElement)
+        : createRow(index),
     );
 
     if (

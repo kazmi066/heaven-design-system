@@ -1,10 +1,5 @@
 export type BadgeVariant =
-  | "default"
-  | "secondary"
-  | "success"
-  | "danger"
-  | "warning"
-  | "info";
+  "default" | "secondary" | "success" | "danger" | "warning" | "info";
 
 export interface BadgeState {
   variant: BadgeVariant;

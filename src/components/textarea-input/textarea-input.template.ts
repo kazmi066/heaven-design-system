@@ -184,7 +184,11 @@ const Template = {
 
     setStringAttribute(textarea, "name", state.name);
     setStringAttribute(textarea, "placeholder", state.placeholder);
-    setStringAttribute(textarea, "aria-label", state.label ? "" : state.ariaLabel);
+    setStringAttribute(
+      textarea,
+      "aria-label",
+      state.label ? "" : state.ariaLabel,
+    );
 
     if (state.label) {
       textarea.setAttribute("aria-labelledby", label.id);

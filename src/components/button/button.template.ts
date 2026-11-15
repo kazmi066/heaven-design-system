@@ -1,7 +1,4 @@
-import type {
-  ButtonState,
-  ButtonTemplateArgs,
-} from "./button.types.js";
+import type { ButtonState, ButtonTemplateArgs } from "./button.types.js";
 
 export const css = (): string => `
   <style>

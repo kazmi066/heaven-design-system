@@ -26,7 +26,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "`hds-breadcrumbs` shows where the current page sits in the site hierarchy. Ancestor pages are links. The last item is the current page, and the component marks it with `aria-current=\"page\"`. Separators are drawn in CSS so they stay out of the accessibility tree. The trail wraps when the width runs out.",
+          '`hds-breadcrumbs` shows where the current page sits in the site hierarchy. Ancestor pages are links. The last item is the current page, and the component marks it with `aria-current="page"`. Separators are drawn in CSS so they stay out of the accessibility tree. The trail wraps when the width runs out.',
       },
     },
   },

@@ -143,7 +143,8 @@ export const States: Story = {
     <div style="display: grid; gap: 0.75rem;">
       ${showcase(
         BUTTON_VARIANTS.map(
-          (variant) => `<hds-button variant="${variant}">${variant}</hds-button>`,
+          (variant) =>
+            `<hds-button variant="${variant}">${variant}</hds-button>`,
         ).join(""),
       )}
       ${showcase(
@@ -188,7 +189,7 @@ export const WithIcon: Story = {
     docs: {
       description: {
         story:
-          'Icons can be projected via the `start` or `end` slots. The button spaces slotted content automatically.',
+          "Icons can be projected via the `start` or `end` slots. The button spaces slotted content automatically.",
       },
     },
   },

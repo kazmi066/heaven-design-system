@@ -8,8 +8,7 @@ import type {
 const defaultItems: AccordionStoryItem[] = [
   {
     heading: "What is Heaven?",
-    content:
-      "Heaven is a design system of small, native-first web components.",
+    content: "Heaven is a design system of small, native-first web components.",
   },
   {
     heading: "Does it need JavaScript?",
@@ -59,7 +58,8 @@ const meta = {
     },
     items: {
       control: "object",
-      description: "Storybook-only: heading, content, and open state per section.",
+      description:
+        "Storybook-only: heading, content, and open state per section.",
     },
   },
 } satisfies Meta<AccordionStoryArgs>;

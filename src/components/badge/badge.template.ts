@@ -55,7 +55,9 @@ export const css = (): string => `
   </style>
 `;
 
-export const html = ({ variant = "default" }: BadgeTemplateArgs = {}): string => `
+export const html = ({
+  variant = "default",
+}: BadgeTemplateArgs = {}): string => `
   <span class="hds-badge" data-variant="${variant}" data-badge>
     <slot></slot>
   </span>

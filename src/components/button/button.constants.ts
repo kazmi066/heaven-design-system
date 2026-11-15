@@ -1,8 +1,4 @@
-import type {
-  ButtonSize,
-  ButtonType,
-  ButtonVariant,
-} from "./button.types.js";
+import type { ButtonSize, ButtonType, ButtonVariant } from "./button.types.js";
 
 export const BUTTON_VARIANTS = [
   "default",
@@ -14,7 +10,11 @@ export const BUTTON_VARIANTS = [
   "error",
 ] as const satisfies readonly ButtonVariant[];
 
-export const BUTTON_SIZES = ["s", "m", "l"] as const satisfies readonly ButtonSize[];
+export const BUTTON_SIZES = [
+  "s",
+  "m",
+  "l",
+] as const satisfies readonly ButtonSize[];
 
 export const BUTTON_TYPES = [
   "button",

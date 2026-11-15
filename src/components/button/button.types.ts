@@ -1,11 +1,5 @@
 export type ButtonVariant =
-  | "default"
-  | "secondary"
-  | "success"
-  | "danger"
-  | "warning"
-  | "info"
-  | "error";
+  "default" | "secondary" | "success" | "danger" | "warning" | "info" | "error";
 
 export type ButtonSize = "s" | "m" | "l";
 

@@ -7,8 +7,7 @@ const progressPercent = (min: string, max: string, value: string): string => {
   const minValue = Number(min);
   const maxValue = Number(max);
   const span = maxValue - minValue;
-  const current =
-    value === "" ? (minValue + maxValue) / 2 : Number(value);
+  const current = value === "" ? (minValue + maxValue) / 2 : Number(value);
 
   if (
     !Number.isFinite(minValue) ||
@@ -298,11 +297,7 @@ const Template = {
     input.disabled = state.disabled;
 
     setStringAttribute(input, "name", state.name);
-    setStringAttribute(
-      input,
-      "aria-label",
-      state.label ? "" : state.ariaLabel,
-    );
+    setStringAttribute(input, "aria-label", state.label ? "" : state.ariaLabel);
 
     if (state.label) {
       input.setAttribute("aria-labelledby", label.id);

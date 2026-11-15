@@ -11,8 +11,10 @@ import type {
   ButtonVariant,
 } from "./button.types.js";
 
-const includes = <T extends string>(values: readonly T[], value: string): value is T =>
-  values.includes(value as T);
+const includes = <T extends string>(
+  values: readonly T[],
+  value: string,
+): value is T => values.includes(value as T);
 
 export class HdsButton extends HTMLElement {
   static observedAttributes = [

@@ -1,10 +1,5 @@
 export type TextInputType =
-  | "text"
-  | "email"
-  | "password"
-  | "search"
-  | "tel"
-  | "url";
+  "text" | "email" | "password" | "search" | "tel" | "url";
 
 export interface TextInputState {
   label: string;
