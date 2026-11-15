@@ -41,7 +41,7 @@ export const css = (): string => `
 
     .hds-range-input__header {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
       gap: var(--hds-space-xs);
     }
@@ -50,128 +50,183 @@ export const css = (): string => `
       color: var(--hds-color-text);
       font-size: var(--hds-font-size-sm);
       font-weight: var(--hds-font-weight-medium);
-      line-height: var(--hds-line-height-tight);
+      line-height: var(--hds-line-height-normal);
     }
 
     .hds-range-input__value {
-      color: var(--hds-color-text-weak);
+      margin-inline-start: auto;
+      border-radius: var(--hds-radius-full);
+      padding: 0 0.5rem;
+      background: var(--hds-color-neutral-soft);
+      color: var(--hds-color-text-on-neutral-soft);
       font-size: var(--hds-font-size-sm);
       font-variant-numeric: tabular-nums;
-      line-height: var(--hds-line-height-tight);
+      font-weight: var(--hds-font-weight-medium);
+      line-height: var(--hds-line-height-normal);
     }
 
     .hds-range-input__control {
-      --hds-range-fill: var(--hds-color-accent);
+      --_fill: var(--hds-color-accent-strong);
+      /* Lighter than the control border, still 3:1 against the surface. */
+      --_rail: color-mix(
+        in oklab,
+        var(--hds-color-border-control) 80%,
+        var(--hds-color-surface)
+      );
+      --_track: 0.375rem;
+      --_thumb: 1.25rem;
       --hds-range-progress: 50%;
       display: block;
       box-sizing: border-box;
       width: 100%;
       min-width: 12rem;
-      height: 1.25rem;
+      /* Taller than the track so the slider is easy to hit. */
+      height: 1.5rem;
       margin: 0;
       appearance: none;
       -webkit-appearance: none;
-      accent-color: var(--hds-color-accent);
       background: transparent;
       cursor: pointer;
       outline: none;
 
       &[aria-invalid="true"] {
-        --hds-range-fill: var(--hds-color-danger);
+        --_fill: var(--hds-color-danger-strong);
       }
 
       &:disabled {
         cursor: not-allowed;
-        opacity: 0.65;
+        opacity: 0.6;
       }
     }
 
     .hds-range-input__control::-webkit-slider-runnable-track {
-      height: 0.25rem;
+      height: var(--_track);
       border-radius: var(--hds-radius-full);
       background: linear-gradient(
         to right,
-        var(--hds-range-fill) 0%,
-        var(--hds-range-fill) var(--hds-range-progress),
-        var(--hds-color-border-strong) var(--hds-range-progress),
-        var(--hds-color-border-strong) 100%
+        var(--_fill) var(--hds-range-progress),
+        var(--_rail) var(--hds-range-progress)
+      );
+    }
+
+    :host(:dir(rtl)) .hds-range-input__control::-webkit-slider-runnable-track {
+      background: linear-gradient(
+        to left,
+        var(--_fill) var(--hds-range-progress),
+        var(--_rail) var(--hds-range-progress)
       );
     }
 
     .hds-range-input__control::-webkit-slider-thumb {
       appearance: none;
       -webkit-appearance: none;
+      margin-top: calc((var(--_track) - var(--_thumb)) / 2);
       box-sizing: border-box;
-      width: 1rem;
-      height: 1rem;
-      margin-top: -0.375rem;
-      border: 1px var(--hds-border-style-solid) var(--hds-color-border);
+      width: var(--_thumb);
+      height: var(--_thumb);
+      border: 1px var(--hds-border-style-solid) var(--hds-color-border-control);
       border-radius: var(--hds-radius-full);
-      background: var(--hds-color-surface);
-      box-shadow: var(--hds-shadow-sm);
-      transition-property: border-color, box-shadow;
+      background: #ffffff;
+      box-shadow: var(--hds-shadow-md);
+      transition-property: border-color, scale;
       transition-duration: var(--hds-duration-normal);
       transition-timing-function: var(--hds-ease-out);
     }
 
     .hds-range-input__control:hover:not(:disabled)::-webkit-slider-thumb {
-      border-color: var(--hds-color-border-hover);
+      border-color: var(--hds-color-text);
+      scale: 1.1;
+    }
+
+    .hds-range-input__control:active:not(:disabled)::-webkit-slider-thumb {
+      scale: 1.2;
     }
 
     .hds-range-input__control:focus-visible::-webkit-slider-thumb {
-      border-color: var(--hds-color-accent);
-      outline: 2px solid var(--hds-color-accent);
+      border-color: var(--hds-color-focus);
+      outline: 2px solid var(--hds-color-focus);
       outline-offset: 2px;
     }
 
     .hds-range-input__control[aria-invalid="true"]:focus-visible::-webkit-slider-thumb {
-      border-color: var(--hds-color-danger);
-      outline-color: var(--hds-color-danger);
+      border-color: var(--hds-color-text-danger);
+      outline-color: var(--hds-color-text-danger);
     }
 
     .hds-range-input__control::-moz-range-track {
-      height: 0.25rem;
+      height: var(--_track);
       border: 0;
       border-radius: var(--hds-radius-full);
-      background: var(--hds-color-border-strong);
+      background: var(--_rail);
     }
 
     .hds-range-input__control::-moz-range-progress {
-      height: 0.25rem;
+      height: var(--_track);
       border-radius: var(--hds-radius-full);
-      background: var(--hds-range-fill);
+      background: var(--_fill);
     }
 
     .hds-range-input__control::-moz-range-thumb {
       box-sizing: border-box;
-      width: 1rem;
-      height: 1rem;
-      border: 1px var(--hds-border-style-solid) var(--hds-color-border);
+      width: var(--_thumb);
+      height: var(--_thumb);
+      border: 1px var(--hds-border-style-solid) var(--hds-color-border-control);
       border-radius: var(--hds-radius-full);
-      background: var(--hds-color-surface);
-      box-shadow: var(--hds-shadow-sm);
+      background: #ffffff;
+      box-shadow: var(--hds-shadow-md);
+      transition-property: border-color, scale;
+      transition-duration: var(--hds-duration-normal);
+      transition-timing-function: var(--hds-ease-out);
     }
 
     .hds-range-input__control:hover:not(:disabled)::-moz-range-thumb {
-      border-color: var(--hds-color-border-hover);
+      border-color: var(--hds-color-text);
+      scale: 1.1;
+    }
+
+    .hds-range-input__control:active:not(:disabled)::-moz-range-thumb {
+      scale: 1.2;
     }
 
     .hds-range-input__control:focus-visible::-moz-range-thumb {
-      border-color: var(--hds-color-accent);
-      outline: 2px solid var(--hds-color-accent);
+      border-color: var(--hds-color-focus);
+      outline: 2px solid var(--hds-color-focus);
       outline-offset: 2px;
     }
 
     .hds-range-input__control[aria-invalid="true"]:focus-visible::-moz-range-thumb {
-      border-color: var(--hds-color-danger);
-      outline-color: var(--hds-color-danger);
+      border-color: var(--hds-color-text-danger);
+      outline-color: var(--hds-color-text-danger);
     }
 
     .hds-range-input__error {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--hds-space-2xs);
       margin: 0;
-      color: var(--hds-color-danger);
+      color: var(--hds-color-text-danger);
       font-size: var(--hds-font-size-sm);
+      font-weight: var(--hds-font-weight-regular);
       line-height: var(--hds-line-height-normal);
+      transition-property: opacity, translate;
+      transition-duration: var(--hds-duration-slow);
+      transition-timing-function: var(--hds-ease-out);
+
+      /* An icon as well as color, so the error does not rely on color. */
+      &::before {
+        content: "";
+        flex: none;
+        inline-size: 1em;
+        block-size: 1lh;
+        background: currentColor;
+        mask: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM9 6a1 1 0 1 1 2 0v4a1 1 0 1 1-2 0V6Zm1 9a1.25 1.25 0 1 0 0-2.5A1.25 1.25 0 0 0 10 15Z%22/%3E%3C/svg%3E') center / 1em no-repeat;
+      }
+
+      /* Slides in when a message appears. */
+      @starting-style {
+        opacity: 0;
+        translate: 0 -0.25rem;
+      }
     }
 
     .hds-range-input__label:empty,
@@ -180,13 +235,21 @@ export const css = (): string => `
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .hds-range-input__error {
+        transition-duration: var(--hds-duration-instant);
+      }
+
+      /* Separate rules: a list with an unknown vendor pseudo drops entirely. */
       .hds-range-input__control::-webkit-slider-thumb {
+        transition-duration: var(--hds-duration-instant);
+      }
+
+      .hds-range-input__control::-moz-range-thumb {
         transition-duration: var(--hds-duration-instant);
       }
     }
 
     @media (forced-colors: active) {
-      /* Separate rules: a list with an unknown vendor pseudo drops entirely. */
       .hds-range-input__control::-webkit-slider-thumb {
         background: Canvas;
         border-color: ButtonText;
@@ -199,6 +262,10 @@ export const css = (): string => `
 
       .hds-range-input__control::-moz-range-progress {
         background: Highlight;
+      }
+
+      .hds-range-input__error::before {
+        background: CanvasText;
       }
     }
   </style>

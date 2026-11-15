@@ -15,6 +15,7 @@ export const css = (): string => `
     }
 
     .hds-checkbox-input {
+      --_size: 1.25rem;
       display: grid;
       gap: var(--hds-space-2xs);
       color: var(--hds-color-text);
@@ -28,6 +29,7 @@ export const css = (): string => `
       display: inline-flex;
       align-items: flex-start;
       gap: var(--hds-space-xs);
+      min-block-size: 1.5rem;
       cursor: pointer;
     }
 
@@ -36,76 +38,124 @@ export const css = (): string => `
       box-sizing: border-box;
       display: grid;
       place-content: center;
-      width: 1.125rem;
-      height: 1.125rem;
+      width: var(--_size);
+      height: var(--_size);
       flex: 0 0 auto;
-      margin: 0;
-      border: 1px var(--hds-border-style-solid) var(--hds-color-border-hover);
-      border-radius: var(--hds-radius-sm);
+      /* Centers the box on the first line of the label at any font size. */
+      margin: max(0px, (1lh - var(--_size)) / 2) 0 0;
+      border: 1px var(--hds-border-style-solid) var(--hds-color-border-control);
+      border-radius: var(--hds-radius-md);
       background: var(--hds-color-surface);
-      color: var(--hds-color-text-on-accent);
+      color: var(--hds-color-text-on-strong);
+      box-shadow: var(--hds-shadow-sm);
       cursor: inherit;
       font: inherit;
-      transition-property: background, border-color;
+      transition-property: background-color, border-color, box-shadow, scale;
       transition-duration: var(--hds-duration-normal);
       transition-timing-function: var(--hds-ease-out);
 
       &::before {
-        width: 0.625rem;
-        height: 0.625rem;
+        width: 0.75rem;
+        height: 0.75rem;
         background: currentColor;
         clip-path: polygon(14% 44%, 0 59%, 40% 100%, 100% 18%, 84% 3%, 39% 72%);
         content: "";
-        transform: scale(0);
-        transition: transform var(--hds-duration-fast) var(--hds-ease-out);
+        scale: 0;
+        transition: scale var(--hds-duration-normal) var(--hds-ease-bounce);
       }
 
       &:hover:not(:disabled) {
-        border-color: var(--hds-color-accent);
+        border-color: var(--hds-color-text);
+      }
+
+      &:active:not(:disabled) {
+        scale: 0.92;
       }
 
       &:checked,
       &:indeterminate {
-        border-color: var(--hds-color-accent);
-        background: var(--hds-color-accent);
+        border-color: var(--hds-color-accent-strong);
+        background: var(--hds-color-accent-strong);
       }
 
       &:checked::before,
       &:indeterminate::before {
-        transform: scale(1);
+        scale: 1;
       }
 
       &:indeterminate::before {
-        width: 0.625rem;
         height: 0.125rem;
+        border-radius: var(--hds-radius-full);
         clip-path: none;
       }
 
       &:focus-visible {
-        outline: 2px solid var(--hds-color-accent);
+        outline: 2px solid var(--hds-color-focus);
         outline-offset: 2px;
+        box-shadow: 0 0 0 6px
+          color-mix(in oklab, var(--hds-color-focus) 22%, transparent);
       }
 
       &:user-invalid,
       &[aria-invalid="true"] {
-        border-color: var(--hds-color-danger);
+        border-color: var(--hds-color-text-danger);
       }
 
       &:user-invalid:focus-visible,
       &[aria-invalid="true"]:focus-visible {
-        outline-color: var(--hds-color-danger);
+        outline-color: var(--hds-color-text-danger);
       }
 
       &:disabled {
+        box-shadow: none;
+      }
+
+      &:disabled:not(:checked, :indeterminate) {
         background: var(--hds-color-surface-hover);
-        color: var(--hds-color-text-weakest);
       }
     }
 
     .hds-checkbox-input__field:has(.hds-checkbox-input__control:disabled) {
-      color: var(--hds-color-text-weaker);
       cursor: not-allowed;
-      opacity: 0.65;
+      opacity: 0.6;
+    }
+
+    /* The control's required attribute tells assistive tech. The empty alt
+       text keeps the asterisk from being read out as well. */
+    hds-checkbox-input[required] .hds-checkbox-input__label::after {
+      content: " *" / "";
+      color: var(--hds-color-text-danger);
+    }
+
+    .hds-checkbox-input__error {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--hds-space-2xs);
+      margin: 0;
+      margin-inline-start: calc(var(--_size) + var(--hds-space-xs));
+      color: var(--hds-color-text-danger);
+      font-size: var(--hds-font-size-sm);
+      font-weight: var(--hds-font-weight-regular);
+      line-height: var(--hds-line-height-normal);
+      transition-property: opacity, translate;
+      transition-duration: var(--hds-duration-slow);
+      transition-timing-function: var(--hds-ease-out);
+
+      /* An icon as well as color, so the error does not rely on color. */
+      &::before {
+        content: "";
+        flex: none;
+        inline-size: 1em;
+        block-size: 1lh;
+        background: currentColor;
+        mask: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM9 6a1 1 0 1 1 2 0v4a1 1 0 1 1-2 0V6Zm1 9a1.25 1.25 0 1 0 0-2.5A1.25 1.25 0 0 0 10 15Z%22/%3E%3C/svg%3E') center / 1em no-repeat;
+      }
+
+      /* Slides in when a message appears. */
+      @starting-style {
+        opacity: 0;
+        translate: 0 -0.25rem;
+      }
     }
 
     .hds-checkbox-input__label:empty,
@@ -113,18 +163,15 @@ export const css = (): string => `
       display: none;
     }
 
-    .hds-checkbox-input__error {
-      margin: 0 0 0 calc(1.125rem + var(--hds-space-xs));
-      color: var(--hds-color-danger);
-      font-size: var(--hds-font-size-sm);
-      font-weight: var(--hds-font-weight-regular);
-      line-height: var(--hds-line-height-normal);
-    }
-
     @media (prefers-reduced-motion: reduce) {
       .hds-checkbox-input__control,
-      .hds-checkbox-input__control::before {
+      .hds-checkbox-input__control::before,
+      .hds-checkbox-input__error {
         transition-duration: var(--hds-duration-instant);
+      }
+
+      .hds-checkbox-input__control:active:not(:disabled) {
+        scale: none;
       }
     }
 
@@ -135,6 +182,10 @@ export const css = (): string => `
         background: Highlight;
         color: HighlightText;
         forced-color-adjust: none;
+      }
+
+      .hds-checkbox-input__error::before {
+        background: CanvasText;
       }
     }
   </style>

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/html";
+import "../button/button.js";
 import "./textarea-input.js";
 import type { HdsTextareaInput } from "./textarea-input.js";
 import type { TextareaInputStoryArgs } from "./textarea-input.types.js";
@@ -103,8 +104,8 @@ const validationExample = (): HTMLFormElement => {
       placeholder="Ubuntu"
       required
     ></hds-textarea-input>
-    <button type="submit">Submit</button>
-    <p data-status role="status" style="margin: 0; color: var(--hds-color-success);" hidden></p>
+    <hds-button type="submit">Submit</hds-button>
+    <p data-status role="status" style="margin: 0; color: var(--hds-color-text-success);" hidden></p>
   `;
 
   const textarea = form.querySelector<HdsTextareaInput>("hds-textarea-input");

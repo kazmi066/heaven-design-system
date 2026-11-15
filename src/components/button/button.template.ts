@@ -3,6 +3,12 @@ import type { ButtonState, ButtonTemplateArgs } from "./button.types.js";
 export const css = (): string => `
   <style>
     :host {
+      --_bg: var(--hds-color-accent-strong);
+      --_fg: var(--hds-color-text-on-strong);
+      --_border: transparent;
+      --_min-size: 2.75rem;
+      --_padding: 1.5rem;
+      --_font-size: var(--hds-font-size-sm);
       display: inline-block;
     }
 
@@ -10,72 +16,97 @@ export const css = (): string => `
       display: none;
     }
 
+    :host([variant="secondary"]) {
+      --_bg: var(--hds-color-surface);
+      --_bg-hover: var(--hds-color-surface-hover);
+      --_fg: var(--hds-color-text);
+      --_border: var(--hds-color-border-control);
+    }
+
+    :host([variant="success"]) {
+      --_bg: var(--hds-color-success-strong);
+    }
+
+    :host(:is([variant="danger"], [variant="error"])) {
+      --_bg: var(--hds-color-danger-strong);
+    }
+
+    :host([variant="info"]) {
+      --_bg: var(--hds-color-info-strong);
+    }
+
+    :host([variant="warning"]) {
+      --_bg: var(--hds-color-warning-strong);
+    }
+
+    :host([size="s"]) {
+      --_min-size: 2.25rem;
+      --_padding: 1rem;
+    }
+
+    :host([size="l"]) {
+      --_min-size: 3.25rem;
+      --_padding: 2rem;
+      --_font-size: var(--hds-font-size-base);
+    }
+
     .hds-button {
       display: inline-grid;
       grid-template-areas: "stack";
       place-items: center;
-      border: 1px var(--hds-border-style-solid) var(--hds-color-border);
-      border-radius: var(--hds-radius-sm);
-      padding: 0.625rem 1rem;
+      box-sizing: border-box;
+      min-block-size: var(--_min-size);
+      margin: 0;
+      border: 1px var(--hds-border-style-solid) var(--_border);
+      border-radius: var(--hds-radius-full);
+      padding: 0.375rem var(--_padding);
+      background: var(--_bg);
+      color: var(--_fg);
+      box-shadow: var(--hds-shadow-sm);
       font-family: var(--hds-font-family);
-      font-size: var(--hds-font-size-base);
-      cursor: pointer;
-      background: var(--hds-color-accent);
-      color: var(--hds-color-text-on-accent);
-      transition-property: background, opacity, color, border-color;
-      transition-duration: var(--hds-transition-slow);
-      transition-timing-function: var(--hds-ease-in);
+      font-size: var(--_font-size);
+      font-weight: var(--hds-font-weight-semibold);
+      line-height: var(--hds-line-height-tight);
       text-decoration: none;
+      cursor: pointer;
+      transition-property:
+        background-color, border-color, color, box-shadow, translate, scale;
+      transition-duration: var(--hds-duration-normal);
+      transition-timing-function: var(--hds-ease-out);
 
+      /* Hover darkens, press shrinks, focus outlines. Each state stays
+         visible when combined with the others. */
       &:hover {
-        filter: brightness(93%);
+        background: var(
+          --_bg-hover,
+          color-mix(in oklab, var(--_bg) 86%, black)
+        );
+      }
+
+      &:active {
+        scale: 0.97;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--hds-color-focus);
+        outline-offset: 2px;
+        box-shadow: 0 0 0 6px
+          color-mix(in oklab, var(--hds-color-focus) 25%, transparent);
       }
 
       &:disabled {
+        box-shadow: none;
         opacity: 0.55;
         cursor: not-allowed;
         pointer-events: none;
       }
     }
 
-    :host([variant="secondary"]) .hds-button {
-      background: var(--hds-color-surface);
-      color: var(--hds-color-text);
-    }
-
-    :host([variant="success"]) .hds-button {
-      background: var(--hds-color-success);
-      color: var(--hds-color-text-on-success);
-    }
-
-    :host([variant="danger"]) .hds-button {
-      background: var(--hds-color-danger);
-      color: var(--hds-color-text-on-danger);
-    }
-
-    :host([variant="info"]) .hds-button {
-      background: var(--hds-color-info);
-      color: var(--hds-color-text-on-info);
-    }
-
-    :host([variant="warning"]) .hds-button {
-      background: var(--hds-color-warning);
-      color: var(--hds-color-text-on-warning);
-    }
-
-    :host([variant="error"]) .hds-button {
-      background: var(--hds-color-danger);
-      color: var(--hds-color-text-on-error);
-    }
-
-    :host([size="s"]) .hds-button {
-      padding: 0.45rem 0.75rem;
-      font-size: var(--hds-font-size-sm);
-    }
-
-    :host([size="l"]) .hds-button {
-      padding: 0.8rem 1.25rem;
-      font-size: var(--hds-font-size-md);
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .hds-button:hover:not(:active, :focus-visible) {
+        translate: 0 -1px;
+        box-shadow: var(--hds-shadow-md);
+      }
     }
 
     .hds-button__content,
@@ -84,7 +115,7 @@ export const css = (): string => `
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: var(--hds-space-2xs);
+      gap: var(--hds-space-xs);
     }
 
     .hds-button__loading {
@@ -111,7 +142,7 @@ export const css = (): string => `
 
     @keyframes hds-button-spin {
       to {
-        transform: rotate(360deg);
+        rotate: 360deg;
       }
     }
 
@@ -120,10 +151,26 @@ export const css = (): string => `
         transition-duration: var(--hds-duration-instant);
       }
 
+      .hds-button:active {
+        scale: none;
+      }
+
       .hds-button__spinner {
         animation: none;
         border-right-color: currentColor;
         opacity: 0.6;
+      }
+    }
+
+    @media (forced-colors: active) {
+      .hds-button {
+        border-color: ButtonText;
+      }
+
+      .hds-button:disabled {
+        border-color: GrayText;
+        color: GrayText;
+        opacity: 1;
       }
     }
   </style>

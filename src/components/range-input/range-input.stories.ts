@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/html";
+import "../button/button.js";
 import "./range-input.js";
 import type { HdsRangeInput } from "./range-input.js";
 import type { RangeInputStoryArgs } from "./range-input.types.js";
@@ -145,36 +146,21 @@ const validationExample = (): HTMLFormElement => {
       }
 
       .sb-validation-form__status[data-state="success"] {
-        color: var(--hds-color-success);
+        color: var(--hds-color-text-success);
       }
 
       .sb-validation-form__status[data-state="error"] {
-        color: var(--hds-color-danger);
+        color: var(--hds-color-text-danger);
       }
 
       .sb-validation-form__status[hidden] {
         display: none;
       }
 
-      .sb-validation-form__submit {
+      .sb-validation-form hds-button {
         justify-self: start;
-        border: 1px var(--hds-border-style-solid) var(--hds-color-accent);
-        border-radius: var(--hds-radius-sm);
-        padding: 0.625rem 1rem;
-        background: var(--hds-color-accent);
-        color: var(--hds-color-text-on-accent);
-        font: inherit;
-        cursor: pointer;
       }
 
-      .sb-validation-form__submit:hover {
-        filter: brightness(93%);
-      }
-
-      .sb-validation-form__submit:focus-visible {
-        outline: 2px solid var(--hds-color-accent);
-        outline-offset: 2px;
-      }
     </style>
 
     <h2 id="range-validation-example-title">Submit validation example</h2>
@@ -193,9 +179,9 @@ const validationExample = (): HTMLFormElement => {
       value="10"
     ></hds-range-input>
 
-    <button class="sb-validation-form__submit" type="submit">
+    <hds-button type="submit">
       Validate form
-    </button>
+    </hds-button>
 
     <p
       class="sb-validation-form__status"

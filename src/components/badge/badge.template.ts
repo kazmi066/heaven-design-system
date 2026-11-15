@@ -1,6 +1,8 @@
 export const css = (): string => `
   <style>
     :host {
+      --_bg: var(--hds-color-primary);
+      --_fg: var(--hds-color-surface);
       display: inline-block;
     }
 
@@ -8,44 +10,58 @@ export const css = (): string => `
       display: none;
     }
 
+    :host([variant="secondary"]) {
+      --_bg: var(--hds-color-neutral-soft);
+      --_fg: var(--hds-color-text-on-neutral-soft);
+    }
+
+    :host([variant="success"]) {
+      --_bg: var(--hds-color-success-soft);
+      --_fg: var(--hds-color-text-on-success-soft);
+    }
+
+    :host([variant="danger"]) {
+      --_bg: var(--hds-color-danger-soft);
+      --_fg: var(--hds-color-text-on-danger-soft);
+    }
+
+    :host([variant="warning"]) {
+      --_bg: var(--hds-color-warning-soft);
+      --_fg: var(--hds-color-text-on-warning-soft);
+    }
+
+    :host([variant="info"]) {
+      --_bg: var(--hds-color-info-soft);
+      --_fg: var(--hds-color-text-on-info-soft);
+    }
+
     .hds-badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.1875rem 0.5rem;
+      gap: var(--hds-space-2xs);
+      /* A faint edge in the text color. It also keeps the pill visible in
+         forced colors, where backgrounds are removed. */
+      border: 1px var(--hds-border-style-solid)
+        color-mix(in oklab, currentColor 20%, transparent);
       border-radius: var(--hds-radius-full);
+      padding: 0.125rem 0.625rem;
+      background: var(--_bg);
+      color: var(--_fg);
       font-family: var(--hds-font-family);
       font-size: var(--hds-font-size-xs);
-      font-weight: var(--hds-font-weight-bold);
-      line-height: var(--hds-line-height-tight);
+      font-weight: var(--hds-font-weight-medium);
+      line-height: var(--hds-line-height-normal);
       white-space: nowrap;
-      background: var(--hds-color-primary);
-      color: var(--hds-color-text-on-accent);
+      transition-property: background-color, border-color, color;
+      transition-duration: var(--hds-duration-normal);
+      transition-timing-function: var(--hds-ease-out);
     }
 
-    :host([variant="secondary"]) .hds-badge {
-      background: var(--hds-color-surface-active);
-      color: var(--hds-color-text);
-    }
-
-    :host([variant="success"]) .hds-badge {
-      background: var(--hds-color-success);
-      color: var(--hds-color-text-on-success);
-    }
-
-    :host([variant="danger"]) .hds-badge {
-      background: var(--hds-color-danger);
-      color: var(--hds-color-text-on-danger);
-    }
-
-    :host([variant="warning"]) .hds-badge {
-      background: var(--hds-color-warning);
-      color: var(--hds-color-text-on-warning);
-    }
-
-    :host([variant="info"]) .hds-badge {
-      background: var(--hds-color-info);
-      color: var(--hds-color-text-on-info);
+    @media (prefers-reduced-motion: reduce) {
+      .hds-badge {
+        transition-duration: var(--hds-duration-instant);
+      }
     }
   </style>
 `;

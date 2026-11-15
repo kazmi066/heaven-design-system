@@ -14,9 +14,11 @@ export const css = (): string => `
     }
 
     .hds-radio-input {
+      --_size: 1.25rem;
       display: inline-flex;
       align-items: flex-start;
       gap: var(--hds-space-xs);
+      min-block-size: 1.5rem;
       color: var(--hds-color-text);
       font-family: var(--hds-font-family);
       font-size: var(--hds-font-size-base);
@@ -29,16 +31,18 @@ export const css = (): string => `
       box-sizing: border-box;
       display: grid;
       place-content: center;
-      width: 1.125rem;
-      height: 1.125rem;
+      width: var(--_size);
+      height: var(--_size);
       flex: 0 0 auto;
-      margin: 0.1875rem 0 0;
-      border: 1px var(--hds-border-style-solid) var(--hds-color-border-hover);
+      /* Centers the circle on the first line of the label. */
+      margin: max(0px, (1lh - var(--_size)) / 2) 0 0;
+      border: 1px var(--hds-border-style-solid) var(--hds-color-border-control);
       border-radius: var(--hds-radius-full);
       background: var(--hds-color-surface);
-      color: var(--hds-color-accent);
+      color: var(--hds-color-text-on-strong);
+      box-shadow: var(--hds-shadow-sm);
       cursor: inherit;
-      transition-property: background, border-color;
+      transition-property: background-color, border-color, box-shadow, scale;
       transition-duration: var(--hds-duration-normal);
       transition-timing-function: var(--hds-ease-out);
 
@@ -48,37 +52,46 @@ export const css = (): string => `
         border-radius: var(--hds-radius-full);
         background: currentColor;
         content: "";
-        transform: scale(0);
-        transition: transform var(--hds-duration-fast) var(--hds-ease-out);
+        scale: 0;
+        transition: scale var(--hds-duration-normal) var(--hds-ease-bounce);
       }
 
       &:hover:not(:disabled) {
-        border-color: var(--hds-color-accent);
+        border-color: var(--hds-color-text);
+      }
+
+      &:active:not(:disabled) {
+        scale: 0.92;
       }
 
       &:checked {
-        border-color: var(--hds-color-accent);
+        border-color: var(--hds-color-accent-strong);
+        background: var(--hds-color-accent-strong);
       }
 
       &:checked::before {
-        transform: scale(1);
+        scale: 1;
       }
 
       &:focus-visible {
-        outline: 2px solid var(--hds-color-accent);
+        outline: 2px solid var(--hds-color-focus);
         outline-offset: 2px;
+        box-shadow: 0 0 0 6px
+          color-mix(in oklab, var(--hds-color-focus) 22%, transparent);
       }
 
       &:disabled {
+        box-shadow: none;
+      }
+
+      &:disabled:not(:checked) {
         background: var(--hds-color-surface-hover);
-        color: var(--hds-color-text-weakest);
       }
     }
 
     .hds-radio-input:has(.hds-radio-input__control:disabled) {
-      color: var(--hds-color-text-weaker);
       cursor: not-allowed;
-      opacity: 0.65;
+      opacity: 0.6;
     }
 
     .hds-radio-input__label:empty {
@@ -90,11 +103,18 @@ export const css = (): string => `
       .hds-radio-input__control::before {
         transition-duration: var(--hds-duration-instant);
       }
+
+      .hds-radio-input__control:active:not(:disabled) {
+        scale: none;
+      }
     }
 
     @media (forced-colors: active) {
-      .hds-radio-input__control::before {
-        background: CanvasText;
+      .hds-radio-input__control:checked {
+        border-color: Highlight;
+        background: Highlight;
+        color: HighlightText;
+        forced-color-adjust: none;
       }
     }
   </style>

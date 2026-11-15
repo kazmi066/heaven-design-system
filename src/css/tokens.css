@@ -16,6 +16,34 @@
   --hds-color-warning: #f59e0b;
   --hds-color-info: #0ea5e9;
 
+  /* Solid fills. White text on each passes WCAG AA (4.5:1). */
+  --hds-color-accent-strong: #005fcc;
+  --hds-color-success-strong: #047857;
+  --hds-color-danger-strong: #be123c;
+  --hds-color-warning-strong: #b45309;
+  --hds-color-info-strong: #0369a1;
+  --hds-color-text-on-strong: #ffffff;
+
+  /* Soft tints with their text color. Each pair passes WCAG AA. */
+  --hds-color-neutral-soft: #f4f4f5;
+  --hds-color-text-on-neutral-soft: #3f3f46;
+  --hds-color-accent-soft: #dbeafe;
+  --hds-color-text-on-accent-soft: #1e40af;
+  --hds-color-success-soft: #d1fae5;
+  --hds-color-text-on-success-soft: #065f46;
+  --hds-color-danger-soft: #ffe4e6;
+  --hds-color-text-on-danger-soft: #9f1239;
+  --hds-color-warning-soft: #fef3c7;
+  --hds-color-text-on-warning-soft: #92400e;
+  --hds-color-info-soft: #e0f2fe;
+  --hds-color-text-on-info-soft: #075985;
+
+  /* Focus ring and control outlines. Both pass 3:1 against the surface. */
+  --hds-color-focus: #005fcc;
+  --hds-color-border-control: #71717a;
+  --hds-color-text-danger: #be123c;
+  --hds-color-text-success: #047857;
+
   /* Text colors */
   --hds-color-text: #09090b;
   --hds-color-text-weak: #52525b;
@@ -207,6 +235,26 @@
   --hds-color-danger: #f43f5e;
   --hds-color-warning: #f59e0b;
   --hds-color-info: #0ea5e9;
+
+  /* Soft tints */
+  --hds-color-neutral-soft: #27272a;
+  --hds-color-text-on-neutral-soft: #e4e4e7;
+  --hds-color-accent-soft: #1e3a8a;
+  --hds-color-text-on-accent-soft: #bfdbfe;
+  --hds-color-success-soft: #064e3b;
+  --hds-color-text-on-success-soft: #a7f3d0;
+  --hds-color-danger-soft: #881337;
+  --hds-color-text-on-danger-soft: #fecdd3;
+  --hds-color-warning-soft: #78350f;
+  --hds-color-text-on-warning-soft: #fde68a;
+  --hds-color-info-soft: #0c4a6e;
+  --hds-color-text-on-info-soft: #bae6fd;
+
+  /* Focus ring and control outlines */
+  --hds-color-focus: #60a5fa;
+  --hds-color-border-control: #a1a1aa;
+  --hds-color-text-danger: #fda4af;
+  --hds-color-text-success: #6ee7b7;
 
   /* Text colors */
   --hds-color-text: #f4f4f5;

@@ -52,7 +52,7 @@ export const css = (): string => `
       flex: none;
       width: 0.375rem;
       height: 0.375rem;
-      margin-inline: 0.5rem;
+      margin-inline: 0.25rem 0.375rem;
       border-top: 1px solid var(--hds-color-icon);
       border-right: 1px solid var(--hds-color-icon);
       transform: rotate(45deg);
@@ -69,43 +69,42 @@ export const css = (): string => `
       max-width: 100%;
       min-height: 1.5rem;
       overflow-wrap: break-word;
-      border-radius: var(--hds-radius-sm);
+      border-radius: var(--hds-radius-md);
+      padding: 0.125rem 0.375rem;
       font: inherit;
       color: var(--hds-color-text-weak);
     }
 
     ::slotted(a) {
       text-decoration: underline;
+      text-decoration-color: transparent;
       text-decoration-thickness: 1px;
       text-underline-offset: 0.2em;
-      transition-property: color;
-      transition-duration: var(--hds-duration-fast);
+      transition-property: background-color, color, text-decoration-color;
+      transition-duration: var(--hds-duration-normal);
       transition-timing-function: var(--hds-ease-out);
     }
 
+    /* Hover adds a tint and an underline, so it does not rely on color. */
     ::slotted(a:hover) {
+      background: var(--hds-color-surface-hover);
       color: var(--hds-color-text);
-    }
-
-    ::slotted(a:focus) {
-      outline: none;
+      text-decoration-color: currentColor;
     }
 
     ::slotted(a:focus-visible) {
       color: var(--hds-color-text);
-      outline: 2px solid var(--hds-color-accent);
+      text-decoration-color: currentColor;
+      outline: 2px solid var(--hds-color-focus);
       outline-offset: 2px;
     }
 
-    ::slotted([aria-current="page"]) {
-      color: var(--hds-color-text);
-      font-weight: var(--hds-font-weight-medium);
-      text-decoration: none;
-    }
-
+    ::slotted([aria-current="page"]),
     ::slotted([aria-current="page"]:hover) {
+      background: none;
       color: var(--hds-color-text);
-      text-decoration: none;
+      font-weight: var(--hds-font-weight-semibold);
+      text-decoration-color: transparent;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -119,8 +118,9 @@ export const css = (): string => `
         border-color: CanvasText;
       }
 
-      ::slotted(a:focus-visible) {
-        outline-color: Highlight;
+      /* Backgrounds and custom colors are removed, so underline every link. */
+      ::slotted(a) {
+        text-decoration-color: currentColor;
       }
     }
   </style>

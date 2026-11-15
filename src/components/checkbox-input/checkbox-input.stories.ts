@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/html";
+import "../button/button.js";
 import "./checkbox-input.js";
 import type { HdsCheckboxInput } from "./checkbox-input.js";
 import type { CheckboxInputStoryArgs } from "./checkbox-input.types.js";
@@ -105,12 +106,12 @@ const indeterminateExample = (): HTMLElement => {
       name="notifications"
       value="all"
     ></hds-checkbox-input>
-    <button type="button">Toggle mixed state</button>
+    <hds-button variant="secondary" size="s">Toggle mixed state</hds-button>
   `;
 
   const checkbox =
     example.querySelector<HdsCheckboxInput>("hds-checkbox-input");
-  const button = example.querySelector<HTMLButtonElement>("button");
+  const button = example.querySelector<HTMLElement>("hds-button");
 
   if (!checkbox || !button) {
     throw new Error("Indeterminate checkbox story is unavailable.");
@@ -167,8 +168,8 @@ const validationExample = (): HTMLFormElement => {
       value="accepted"
       required
     ></hds-checkbox-input>
-    <button type="submit">Continue</button>
-    <p data-status role="status" style="margin: 0; color: var(--hds-color-success);" hidden></p>
+    <hds-button type="submit">Continue</hds-button>
+    <p data-status role="status" style="margin: 0; color: var(--hds-color-text-success);" hidden></p>
   `;
 
   const checkbox = form.querySelector<HdsCheckboxInput>("hds-checkbox-input");
