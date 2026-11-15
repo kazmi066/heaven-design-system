@@ -13,7 +13,7 @@ const defaultItems: AccordionStoryItem[] = [
   {
     heading: "Does it need JavaScript?",
     content:
-      "Opening, closing, and keyboard support come from the native details element. The script only wires up the markup.",
+      "No. Opening, closing, keyboard support, and one-at-a-time groups all come from the native details element. The script only loads the styles.",
   },
   {
     heading: "Can I theme it?",
@@ -26,13 +26,14 @@ const accordion = ({
   exclusive = false,
   items = defaultItems,
 }: AccordionStoryArgs): string => `
-  <hds-accordion ${exclusive ? "exclusive" : ""}>
+  <hds-accordion>
     ${items
       .map(
-        (item) =>
-          `<div heading="${item.heading}"${item.open ? " open" : ""}>${
-            item.content
-          }</div>`,
+        (item) => `
+    <details${exclusive ? ' name="faq"' : ""}${item.open ? " open" : ""}>
+      <summary>${item.heading}</summary>
+      <p>${item.content}</p>
+    </details>`,
       )
       .join("")}
   </hds-accordion>
@@ -46,14 +47,15 @@ const meta = {
     docs: {
       description: {
         component:
-          "`hds-accordion` stacks collapsible sections. Each direct child is one section: its `heading` attribute is the title and its content is the panel. Sections are native `details` elements underneath, so toggling and keyboard support (`Tab`, `Enter`, `Space`) are handled by the browser. Open state is mirrored to an `open` attribute on the child. Add `exclusive` to keep only one section open at a time.",
+          "`hds-accordion` styles a stack of native `details` elements. Write each section as `<details><summary>Title</summary><p>Panel</p></details>` and wrap panel content in an element so it picks up the padding. The browser handles toggling, keyboard support (`Tab`, `Enter`, `Space`), find-in-page, and the `open` attribute. To keep one section open at a time, give the sections the same `name`. The open and close animation uses `interpolate-size` and `::details-content`; browsers without them toggle instantly.",
       },
     },
   },
   argTypes: {
     exclusive: {
       control: "boolean",
-      description: "Only one section can be open at a time.",
+      description:
+        "Storybook-only: gives every section the same `name` so only one can be open at a time.",
       table: { defaultValue: { summary: "false" } },
     },
     items: {
@@ -80,7 +82,7 @@ export const Exclusive: Story = {
     docs: {
       description: {
         story:
-          "With `exclusive`, opening a section closes the others. This uses the native `name` grouping of `details`.",
+          "Sections that share a `name` close each other. This is the native `details` grouping, with no script involved.",
       },
     },
   },
@@ -96,7 +98,7 @@ export const OpenByDefault: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Add `open` to a section to start it expanded.",
+        story: "Add `open` to a `details` element to start it expanded.",
       },
     },
   },

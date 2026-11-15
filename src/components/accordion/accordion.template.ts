@@ -1,20 +1,11 @@
-import { ACCORDION_GROUP } from "./accordion.constants.js";
-import type { AccordionState } from "./accordion.types.js";
-
 export const css = (): string => `
-  <style>
-    :host {
+  <style id="hds-accordion-styles">
+    hds-accordion {
       display: block;
       width: 100%;
       min-width: 0;
+      box-sizing: border-box;
       interpolate-size: allow-keywords;
-    }
-
-    :host([hidden]) {
-      display: none;
-    }
-
-    .hds-accordion {
       overflow: hidden;
       border: 1px var(--hds-border-style-solid) var(--hds-color-border);
       border-radius: var(--hds-radius-md);
@@ -25,15 +16,16 @@ export const css = (): string => `
       line-height: var(--hds-line-height-normal);
     }
 
-    .hds-accordion:not(:has(details)) {
+    hds-accordion[hidden],
+    hds-accordion:not(:has(> details)) {
       display: none;
     }
 
-    details + details {
+    hds-accordion > details + details {
       border-top: 1px var(--hds-border-style-solid) var(--hds-color-border);
     }
 
-    summary {
+    hds-accordion > details > summary {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -73,11 +65,11 @@ export const css = (): string => `
       }
     }
 
-    details[open] > summary::after {
+    hds-accordion > details[open] > summary::after {
       transform: translateY(25%) rotate(-135deg);
     }
 
-    details::details-content {
+    hds-accordion > details::details-content {
       block-size: 0;
       overflow: clip;
       transition-property: block-size, content-visibility;
@@ -86,11 +78,12 @@ export const css = (): string => `
       transition-behavior: allow-discrete;
     }
 
-    details[open]::details-content {
+    hds-accordion > details[open]::details-content {
       block-size: auto;
     }
 
-    .hds-accordion__panel {
+    hds-accordion > details > :not(summary) {
+      margin: 0;
       padding: 0 1rem 1rem;
       color: var(--hds-color-text-weak);
     }
@@ -98,95 +91,19 @@ export const css = (): string => `
     @media (prefers-reduced-motion: reduce) {
       summary,
       summary::after,
-      details::details-content {
+      hds-accordion > details::details-content {
         transition-duration: var(--hds-duration-instant);
       }
     }
 
     @media (forced-colors: active) {
-      summary::after {
+      hds-accordion > details > summary::after {
         border-color: CanvasText;
       }
 
-      summary:focus-visible {
+      hds-accordion > details > summary:focus-visible {
         outline-color: Highlight;
       }
     }
   </style>
 `;
-
-export const html = (): string => `
-  <div class="hds-accordion"></div>
-`;
-
-const createRow = (index: number): HTMLDetailsElement => {
-  const row = document.createElement("details");
-  const summary = document.createElement("summary");
-  const panel = document.createElement("div");
-  const slot = document.createElement("slot");
-
-  panel.className = "hds-accordion__panel";
-  slot.name = `item-${index}`;
-  panel.append(slot);
-  row.append(summary, panel);
-
-  return row;
-};
-
-const Template = {
-  render(): string {
-    return `
-      ${css()}
-      ${html()}
-    `;
-  },
-
-  update(
-    root: ShadowRoot,
-    state: AccordionState,
-    items: readonly HTMLElement[],
-  ): void {
-    const container = root.querySelector<HTMLElement>(".hds-accordion");
-
-    if (!container) {
-      throw new Error("Accordion markup is unavailable.");
-    }
-
-    const rows = items.map((_, index) =>
-      container.children[index] instanceof HTMLDetailsElement
-        ? (container.children[index] as HTMLDetailsElement)
-        : createRow(index),
-    );
-
-    if (
-      container.children.length !== rows.length ||
-      rows.some((row, index) => container.children[index] !== row)
-    ) {
-      container.replaceChildren(...rows);
-    }
-
-    items.forEach((item, index) => {
-      const row = rows[index]!;
-
-      item.slot = `item-${index}`;
-      row.querySelector("summary")!.textContent =
-        item.getAttribute("heading") || "";
-
-      if (state.exclusive) {
-        row.name = ACCORDION_GROUP;
-      } else {
-        row.removeAttribute("name");
-      }
-    });
-
-    // Close first, then open: in exclusive mode the last open item wins.
-    rows.forEach((row, index) => {
-      if (!items[index]!.hasAttribute("open")) row.open = false;
-    });
-    rows.forEach((row, index) => {
-      if (items[index]!.hasAttribute("open")) row.open = true;
-    });
-  },
-};
-
-export default Template;

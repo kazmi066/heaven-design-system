@@ -174,7 +174,8 @@ export const css = (): string => `
       line-height: var(--hds-line-height-normal);
     }
 
-    .hds-range-input__error[hidden] {
+    .hds-range-input__label:empty,
+    .hds-range-input__error:empty {
       display: none;
     }
 
@@ -185,7 +186,12 @@ export const css = (): string => `
     }
 
     @media (forced-colors: active) {
-      .hds-range-input__control::-webkit-slider-thumb,
+      /* Separate rules: a list with an unknown vendor pseudo drops entirely. */
+      .hds-range-input__control::-webkit-slider-thumb {
+        background: Canvas;
+        border-color: ButtonText;
+      }
+
       .hds-range-input__control::-moz-range-thumb {
         background: Canvas;
         border-color: ButtonText;
@@ -220,10 +226,7 @@ export const html = ({
         class="hds-range-input__label"
         for="${controlId}"
         data-label
-        ${label ? "" : "hidden"}
-      >
-        ${label}
-      </label>
+      >${label}</label>
       <output
         class="hds-range-input__value"
         for="${controlId}"
@@ -249,10 +252,7 @@ export const html = ({
       id="${errorId}"
       data-error
       role="alert"
-      ${errorMessage ? "" : "hidden"}
-    >
-      ${errorMessage}
-    </p>
+    >${errorMessage}</p>
   </div>
 `;
 
@@ -289,7 +289,6 @@ const Template = {
     }
 
     label.textContent = state.label;
-    label.hidden = !state.label;
 
     input.min = state.min;
     input.max = state.max;
@@ -298,16 +297,6 @@ const Template = {
 
     setStringAttribute(input, "name", state.name);
     setStringAttribute(input, "aria-label", state.label ? "" : state.ariaLabel);
-
-    if (state.label) {
-      input.setAttribute("aria-labelledby", label.id);
-    } else {
-      input.removeAttribute("aria-labelledby");
-    }
-
-    if (state.value !== "" && input.value !== state.value) {
-      input.value = state.value;
-    }
 
     output.textContent = input.value;
     input.style.setProperty(
@@ -319,14 +308,12 @@ const Template = {
 
     input.setCustomValidity(state.errorMessage);
 
+    error.textContent = state.errorMessage;
+
     if (hasError) {
-      error.hidden = false;
-      error.textContent = state.errorMessage;
       input.setAttribute("aria-invalid", "true");
       input.setAttribute("aria-describedby", error.id);
     } else {
-      error.textContent = "";
-      error.hidden = true;
       input.removeAttribute("aria-invalid");
       input.removeAttribute("aria-describedby");
     }

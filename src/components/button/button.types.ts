@@ -6,8 +6,6 @@ export type ButtonSize = "s" | "m" | "l";
 export type ButtonType = "button" | "submit" | "reset";
 
 export interface ButtonState {
-  variant: ButtonVariant;
-  size: ButtonSize;
   type: ButtonType;
   disabled: boolean;
   loading: boolean;
@@ -17,6 +15,8 @@ export interface ButtonState {
 export type ButtonTemplateArgs = Partial<ButtonState>;
 
 export interface ButtonStoryArgs extends ButtonTemplateArgs {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   icon?: boolean;
   label?: string;
 }

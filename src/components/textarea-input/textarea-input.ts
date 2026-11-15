@@ -42,14 +42,9 @@ export class HdsTextareaInput extends HTMLElement {
       }
 
       this._textarea = textarea;
-      this._textarea.addEventListener("input", this.handleInput);
     }
 
     this.sync();
-  }
-
-  disconnectedCallback(): void {
-    this._textarea?.removeEventListener("input", this.handleInput);
   }
 
   attributeChangedCallback(
@@ -58,7 +53,7 @@ export class HdsTextareaInput extends HTMLElement {
     newValue: string | null,
   ): void {
     if (name === "value") {
-      this._value = newValue ?? "";
+      this.value = newValue || "";
     }
 
     if (this._textarea) {
@@ -71,10 +66,11 @@ export class HdsTextareaInput extends HTMLElement {
   }
 
   set value(value: string) {
-    this._value = String(value ?? "");
+    // Held only until the textarea exists; after that the textarea owns it.
+    this._value = value;
 
     if (this._textarea) {
-      this._textarea.value = this._value;
+      this._textarea.value = value;
     }
   }
 
@@ -138,12 +134,6 @@ export class HdsTextareaInput extends HTMLElement {
       required: this.hasAttribute("required"),
     };
   }
-
-  private readonly handleInput = (event: Event): void => {
-    if (event.target instanceof HTMLTextAreaElement) {
-      this._value = event.target.value;
-    }
-  };
 
   private sync(): void {
     Template.update(this, this.state);

@@ -18,7 +18,6 @@ export class HdsRangeInput extends HTMLElement {
 
   private readonly root: ShadowRoot;
   private readonly _input: HTMLInputElement;
-  private _value?: string;
 
   constructor() {
     super();
@@ -54,7 +53,7 @@ export class HdsRangeInput extends HTMLElement {
     newValue: string | null,
   ): void {
     if (name === "value") {
-      this._value = newValue ?? "";
+      this._input.value = newValue || "";
     }
 
     if (this.root.hasChildNodes()) {
@@ -67,9 +66,7 @@ export class HdsRangeInput extends HTMLElement {
   }
 
   set value(value: string) {
-    this._value = String(value ?? "");
-
-    this._input.value = this._value;
+    this._input.value = value;
     this.sync();
   }
 
@@ -113,7 +110,7 @@ export class HdsRangeInput extends HTMLElement {
     return {
       label: this.getAttribute("label") || "",
       name: this.getAttribute("name") || "",
-      value: this._value ?? this.getAttribute("value") ?? "",
+      value: this.getAttribute("value") || "",
       min: this.getAttribute("min") || "0",
       max: this.getAttribute("max") || "100",
       step: this.getAttribute("step") || "1",
@@ -123,11 +120,10 @@ export class HdsRangeInput extends HTMLElement {
     };
   }
 
-  private readonly handleInput = (event: Event): void => {
-    if (event.target instanceof HTMLInputElement) {
-      this._value = event.target.value;
-      this.sync();
-    }
+  // Blink and WebKit have no fill pseudo-element, so the readout and the
+  // track fill follow the native value from here.
+  private readonly handleInput = (): void => {
+    this.sync();
   };
 
   private sync(): void {

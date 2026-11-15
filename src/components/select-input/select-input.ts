@@ -17,7 +17,6 @@ export class HdsSelectInput extends HTMLElement {
 
   private readonly root: ShadowRoot;
   private readonly _select: HTMLSelectElement;
-  private _value?: string;
 
   constructor() {
     super();
@@ -39,12 +38,7 @@ export class HdsSelectInput extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this._select.addEventListener("change", this.handleChange);
     this.sync();
-  }
-
-  disconnectedCallback(): void {
-    this._select.removeEventListener("change", this.handleChange);
   }
 
   attributeChangedCallback(
@@ -53,7 +47,7 @@ export class HdsSelectInput extends HTMLElement {
     newValue: string | null,
   ): void {
     if (name === "value") {
-      this._value = newValue ?? "";
+      this._select.value = newValue || "";
     }
 
     if (this.root.hasChildNodes()) {
@@ -66,9 +60,7 @@ export class HdsSelectInput extends HTMLElement {
   }
 
   set value(value: string) {
-    this._value = String(value ?? "");
-
-    this._select.value = this._value;
+    this._select.value = value;
   }
 
   get options(): HTMLOptionsCollection {
@@ -124,7 +116,6 @@ export class HdsSelectInput extends HTMLElement {
       label: this.getAttribute("label") || "",
       name: this.getAttribute("name") || "",
       placeholder: this.getAttribute("placeholder") || "",
-      value: this._value ?? this.getAttribute("value") ?? "",
       ariaLabel: this.getAttribute("aria-label") || "",
       errorMessage: this.errorMessage,
       options: Array.from(this.children).map((child) => ({
@@ -136,12 +127,6 @@ export class HdsSelectInput extends HTMLElement {
       required: this.hasAttribute("required"),
     };
   }
-
-  private readonly handleChange = (event: Event): void => {
-    if (event.target instanceof HTMLSelectElement) {
-      this._value = event.target.value;
-    }
-  };
 
   private sync(): void {
     Template.update(this.root, this.state);

@@ -57,10 +57,12 @@ export const css = (): string => `
         outline-offset: 2px;
       }
 
+      &:user-invalid,
       &[aria-invalid="true"] {
         border-color: var(--hds-color-danger);
       }
 
+      &:user-invalid:focus-visible,
       &[aria-invalid="true"]:focus-visible {
         outline-color: var(--hds-color-danger);
       }
@@ -84,7 +86,8 @@ export const css = (): string => `
       line-height: var(--hds-line-height-normal);
     }
 
-    .hds-textarea-input__error[hidden] {
+    .hds-textarea-input__label:empty,
+    .hds-textarea-input__error:empty {
       display: none;
     }
 
@@ -119,10 +122,7 @@ export const html = ({
       class="hds-textarea-input__label"
       for="${controlId}"
       data-label
-      ${label ? "" : "hidden"}
-    >
-      ${label}
-    </label>
+    >${label}</label>
     <textarea
       class="hds-textarea-input__control"
       id="${controlId}"
@@ -139,10 +139,7 @@ export const html = ({
       id="${errorId}"
       data-error
       role="alert"
-      ${errorMessage ? "" : "hidden"}
-    >
-      ${errorMessage}
-    </p>
+    >${errorMessage}</p>
   </div>
 `;
 
@@ -175,7 +172,6 @@ const Template = {
     }
 
     label.textContent = state.label;
-    label.hidden = !state.label;
 
     textarea.rows = state.rows;
     textarea.disabled = state.disabled;
@@ -190,30 +186,18 @@ const Template = {
       state.label ? "" : state.ariaLabel,
     );
 
-    if (state.label) {
-      textarea.setAttribute("aria-labelledby", label.id);
-    } else {
-      textarea.removeAttribute("aria-labelledby");
-    }
-
     const hasError = Boolean(state.errorMessage);
 
     textarea.setCustomValidity(state.errorMessage);
 
+    error.textContent = state.errorMessage;
+
     if (hasError) {
-      error.hidden = false;
-      error.textContent = state.errorMessage;
       textarea.setAttribute("aria-invalid", "true");
       textarea.setAttribute("aria-describedby", error.id);
     } else {
-      error.textContent = "";
-      error.hidden = true;
       textarea.removeAttribute("aria-invalid");
       textarea.removeAttribute("aria-describedby");
-    }
-
-    if (textarea.value !== state.value) {
-      textarea.value = state.value;
     }
   },
 };

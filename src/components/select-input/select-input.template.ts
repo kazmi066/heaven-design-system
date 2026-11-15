@@ -64,10 +64,12 @@ export const css = (): string => `
         outline-offset: 2px;
       }
 
+      &:user-invalid,
       &[aria-invalid="true"] {
         border-color: var(--hds-color-danger);
       }
 
+      &:user-invalid:focus-visible,
       &[aria-invalid="true"]:focus-visible {
         outline-color: var(--hds-color-danger);
       }
@@ -102,7 +104,8 @@ export const css = (): string => `
       line-height: var(--hds-line-height-normal);
     }
 
-    .hds-select-input__error[hidden] {
+    .hds-select-input__label:empty,
+    .hds-select-input__error:empty {
       display: none;
     }
 
@@ -141,10 +144,7 @@ export const html = ({
       class="hds-select-input__label"
       for="${controlId}"
       data-label
-      ${label ? "" : "hidden"}
-    >
-      ${label}
-    </label>
+    >${label}</label>
     <div class="hds-select-input__wrapper">
       <select
         class="hds-select-input__control"
@@ -179,10 +179,7 @@ export const html = ({
       id="${errorId}"
       data-error
       role="alert"
-      ${errorMessage ? "" : "hidden"}
-    >
-      ${errorMessage}
-    </p>
+    >${errorMessage}</p>
   </div>
 `;
 
@@ -218,7 +215,6 @@ const Template = {
     }
 
     label.textContent = state.label;
-    label.hidden = !state.label;
 
     select.disabled = state.disabled;
     select.required = state.required;
@@ -230,30 +226,18 @@ const Template = {
       state.label ? "" : state.ariaLabel,
     );
 
-    if (state.label) {
-      select.setAttribute("aria-labelledby", label.id);
-    } else {
-      select.removeAttribute("aria-labelledby");
-    }
-
     const hasError = Boolean(state.errorMessage);
 
     select.setCustomValidity(state.errorMessage);
 
+    error.textContent = state.errorMessage;
+
     if (hasError) {
-      error.hidden = false;
-      error.textContent = state.errorMessage;
       select.setAttribute("aria-invalid", "true");
       select.setAttribute("aria-describedby", error.id);
     } else {
-      error.textContent = "";
-      error.hidden = true;
       select.removeAttribute("aria-invalid");
       select.removeAttribute("aria-describedby");
-    }
-
-    if (select.value !== state.value) {
-      select.value = state.value;
     }
   },
 };

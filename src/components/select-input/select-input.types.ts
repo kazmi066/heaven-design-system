@@ -8,7 +8,6 @@ export interface SelectInputState {
   label: string;
   name: string;
   placeholder: string;
-  value: string;
   ariaLabel: string;
   errorMessage: string;
   options: SelectOption[];
@@ -24,4 +23,6 @@ export interface SelectInputTemplateIds {
 export type SelectInputTemplateArgs = Partial<SelectInputState> &
   Partial<SelectInputTemplateIds>;
 
-export type SelectInputStoryArgs = Partial<SelectInputState>;
+export type SelectInputStoryArgs = Partial<SelectInputState> & {
+  value?: string;
+};

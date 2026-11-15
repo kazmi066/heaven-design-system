@@ -18,8 +18,10 @@ export const css = (): string => `
       border-radius: var(--hds-radius-sm);
       padding: 0.625rem 1rem;
       font-family: var(--hds-font-family);
+      font-size: var(--hds-font-size-base);
       cursor: pointer;
       background: var(--hds-color-accent);
+      color: var(--hds-color-text-on-accent);
       transition-property: background, opacity, color, border-color;
       transition-duration: var(--hds-transition-slow);
       transition-timing-function: var(--hds-ease-in);
@@ -34,57 +36,46 @@ export const css = (): string => `
         cursor: not-allowed;
         pointer-events: none;
       }
+    }
 
-      &[data-variant="default"] {
-        background: var(--hds-color-accent);
-        color: var(--hds-color-text-on-accent);
-      }
+    :host([variant="secondary"]) .hds-button {
+      background: var(--hds-color-surface);
+      color: var(--hds-color-text);
+    }
 
-      &[data-variant="secondary"] {
-        background: var(--hds-color-surface);
-        color: var(--hds-color-text);
-        border-color: var(--hds-color-border);
-      }
+    :host([variant="success"]) .hds-button {
+      background: var(--hds-color-success);
+      color: var(--hds-color-text-on-success);
+    }
 
-      &[data-variant="success"] {
-        background: var(--hds-color-success);
-        color: var(--hds-color-text-on-success);
-      }
+    :host([variant="danger"]) .hds-button {
+      background: var(--hds-color-danger);
+      color: var(--hds-color-text-on-danger);
+    }
 
-      &[data-variant="danger"] {
-        background: var(--hds-color-danger);
-        color: var(--hds-color-text-on-danger);
-      }
+    :host([variant="info"]) .hds-button {
+      background: var(--hds-color-info);
+      color: var(--hds-color-text-on-info);
+    }
 
-      &[data-variant="info"] {
-        background: var(--hds-color-info);
-        color: var(--hds-color-text-on-info);
-      }
+    :host([variant="warning"]) .hds-button {
+      background: var(--hds-color-warning);
+      color: var(--hds-color-text-on-warning);
+    }
 
-      &[data-variant="warning"] {
-        background: var(--hds-color-warning);
-        color: var(--hds-color-text-on-warning);
-      }
+    :host([variant="error"]) .hds-button {
+      background: var(--hds-color-danger);
+      color: var(--hds-color-text-on-error);
+    }
 
-      &[data-variant="error"] {
-        background: var(--hds-color-danger);
-        color: var(--hds-color-text-on-error);
-      }
+    :host([size="s"]) .hds-button {
+      padding: 0.45rem 0.75rem;
+      font-size: var(--hds-font-size-sm);
+    }
 
-      &[data-size="s"] {
-        padding: 0.45rem 0.75rem;
-        font-size: var(--hds-font-size-sm);
-      }
-
-      &[data-size="m"] {
-        padding: 0.625rem 1rem;
-        font-size: var(--hds-font-size-base);
-      }
-
-      &[data-size="l"] {
-        padding: 0.8rem 1.25rem;
-        font-size: var(--hds-font-size-md);
-      }
+    :host([size="l"]) .hds-button {
+      padding: 0.8rem 1.25rem;
+      font-size: var(--hds-font-size-md);
     }
 
     .hds-button__content,
@@ -100,11 +91,11 @@ export const css = (): string => `
       visibility: hidden;
     }
 
-    .hds-button[aria-busy="true"] .hds-button__content {
+    :host([loading]) .hds-button__content {
       visibility: hidden;
     }
 
-    .hds-button[aria-busy="true"] .hds-button__loading {
+    :host([loading]) .hds-button__loading {
       visibility: visible;
     }
 
@@ -139,8 +130,6 @@ export const css = (): string => `
 `;
 
 export const html = ({
-  variant = "default",
-  size = "m",
   type = "button",
   disabled = false,
   loading = false,
@@ -151,8 +140,6 @@ export const html = ({
   return `
     <button
       class="hds-button"
-      data-variant="${variant}"
-      data-size="${size}"
       type="${type}"
       ${isUnavailable ? "disabled" : ""}
       ${loading ? 'aria-busy="true"' : ""}
@@ -191,8 +178,6 @@ const Template = {
       throw new Error("Button template is missing required elements.");
     }
 
-    button.dataset.variant = state.variant;
-    button.dataset.size = state.size;
     button.type = state.type;
     button.disabled = state.disabled || state.loading;
 

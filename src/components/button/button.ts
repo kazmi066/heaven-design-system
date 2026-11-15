@@ -1,15 +1,6 @@
 import Template from "./button.template.js";
-import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-} from "./button.constants.js";
-import type {
-  ButtonSize,
-  ButtonState,
-  ButtonType,
-  ButtonVariant,
-} from "./button.types.js";
+import { BUTTON_TYPES } from "./button.constants.js";
+import type { ButtonState, ButtonType } from "./button.types.js";
 
 const includes = <T extends string>(
   values: readonly T[],
@@ -17,14 +8,8 @@ const includes = <T extends string>(
 ): value is T => values.includes(value as T);
 
 export class HdsButton extends HTMLElement {
-  static observedAttributes = [
-    "variant",
-    "size",
-    "type",
-    "disabled",
-    "loading",
-    "loading-label",
-  ];
+  // variant and size are styled from the host attribute in CSS.
+  static observedAttributes = ["type", "disabled", "loading", "loading-label"];
 
   private readonly root: ShadowRoot;
 
@@ -53,15 +38,9 @@ export class HdsButton extends HTMLElement {
   }
 
   private get state(): ButtonState {
-    const variant = this.getAttribute("variant") || "default";
-    const size = this.getAttribute("size") || "m";
     const type = this.getAttribute("type") || "button";
 
     return {
-      variant: includes(BUTTON_VARIANTS, variant)
-        ? variant
-        : ("default" satisfies ButtonVariant),
-      size: includes(BUTTON_SIZES, size) ? size : ("m" satisfies ButtonSize),
       type: includes(BUTTON_TYPES, type)
         ? type
         : ("button" satisfies ButtonType),

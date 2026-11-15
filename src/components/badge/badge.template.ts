@@ -1,5 +1,3 @@
-import type { BadgeState, BadgeTemplateArgs } from "./badge.types.js";
-
 export const css = (): string => `
   <style>
     :host {
@@ -21,64 +19,49 @@ export const css = (): string => `
       font-weight: var(--hds-font-weight-bold);
       line-height: var(--hds-line-height-tight);
       white-space: nowrap;
-    }
-
-    .hds-badge[data-variant="default"] {
       background: var(--hds-color-primary);
       color: var(--hds-color-text-on-accent);
     }
 
-    .hds-badge[data-variant="secondary"] {
+    :host([variant="secondary"]) .hds-badge {
       background: var(--hds-color-surface-active);
       color: var(--hds-color-text);
     }
 
-    .hds-badge[data-variant="success"] {
+    :host([variant="success"]) .hds-badge {
       background: var(--hds-color-success);
       color: var(--hds-color-text-on-success);
     }
 
-    .hds-badge[data-variant="danger"] {
+    :host([variant="danger"]) .hds-badge {
       background: var(--hds-color-danger);
       color: var(--hds-color-text-on-danger);
     }
 
-    .hds-badge[data-variant="warning"] {
+    :host([variant="warning"]) .hds-badge {
       background: var(--hds-color-warning);
       color: var(--hds-color-text-on-warning);
     }
 
-    .hds-badge[data-variant="info"] {
+    :host([variant="info"]) .hds-badge {
       background: var(--hds-color-info);
       color: var(--hds-color-text-on-info);
     }
   </style>
 `;
 
-export const html = ({
-  variant = "default",
-}: BadgeTemplateArgs = {}): string => `
-  <span class="hds-badge" data-variant="${variant}" data-badge>
+export const html = (): string => `
+  <span class="hds-badge">
     <slot></slot>
   </span>
 `;
 
 const Template = {
-  render(args: BadgeTemplateArgs = {}): string {
+  render(): string {
     return `
       ${css()}
-      ${html(args)}
+      ${html()}
     `;
-  },
-
-  update(root: ShadowRoot, state: BadgeState): void {
-    const badge = root.querySelector<HTMLElement>("[data-badge]");
-
-    if (!badge) {
-      throw new Error("Badge element is unavailable.");
-    }
-
-    badge.dataset.variant = state.variant;
   },
 };
 

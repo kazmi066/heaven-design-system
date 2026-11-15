@@ -104,10 +104,12 @@ export const css = (): string => `
         outline-offset: 2px;
       }
 
+      &:user-invalid,
       &[aria-invalid="true"] {
         border-color: var(--hds-color-danger);
       }
 
+      &:user-invalid:focus-visible,
       &[aria-invalid="true"]:focus-visible {
         outline-color: var(--hds-color-danger);
       }
@@ -131,7 +133,8 @@ export const css = (): string => `
       line-height: var(--hds-line-height-normal);
     }
 
-    .hds-text-input__error[hidden] {
+    .hds-text-input__label:empty,
+    .hds-text-input__error:empty {
       display: none;
     }
 
@@ -152,7 +155,6 @@ export const html = ({
   name = "",
   placeholder = "",
   autocomplete = "",
-  value = "",
   ariaLabel = "",
   errorMessage = "",
   passwordVisible = false,
@@ -168,10 +170,7 @@ export const html = ({
         class="hds-text-input__label"
         for="${controlId}"
         data-label
-        ${label ? "" : "hidden"}
-      >
-        ${label}
-      </label>
+      >${label}</label>
       <button
         class="hds-text-input__toggle"
         type="button"
@@ -224,7 +223,6 @@ export const html = ({
       ${attribute("name", name)}
       ${attribute("placeholder", placeholder)}
       ${attribute("autocomplete", autocomplete)}
-      ${attribute("value", value)}
       ${attribute("aria-label", ariaLabel)}
       ${disabled ? "disabled" : ""}
       ${readonly ? "readonly" : ""}
@@ -235,10 +233,7 @@ export const html = ({
       id="${errorId}"
       data-error
       role="alert"
-      ${errorMessage ? "" : "hidden"}
-    >
-      ${errorMessage}
-    </p>
+    >${errorMessage}</p>
   </div>
 `;
 
@@ -288,7 +283,6 @@ const Template = {
     }
 
     label.textContent = state.label;
-    label.hidden = !state.label;
 
     const isPassword = state.type === "password";
     const passwordVisible = isPassword && state.passwordVisible;
@@ -319,20 +313,14 @@ const Template = {
 
     input.setCustomValidity(state.errorMessage);
 
+    error.textContent = state.errorMessage;
+
     if (hasError) {
-      error.hidden = false;
-      error.textContent = state.errorMessage;
       input.setAttribute("aria-invalid", "true");
       input.setAttribute("aria-describedby", error.id);
     } else {
-      error.textContent = "";
-      error.hidden = true;
       input.removeAttribute("aria-invalid");
       input.removeAttribute("aria-describedby");
-    }
-
-    if (input.value !== state.value) {
-      input.value = state.value;
     }
   },
 };

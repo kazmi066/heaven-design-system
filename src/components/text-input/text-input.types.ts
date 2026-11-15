@@ -7,7 +7,6 @@ export interface TextInputState {
   name: string;
   placeholder: string;
   autocomplete: string;
-  value: string;
   ariaLabel: string;
   errorMessage: string;
   passwordVisible: boolean;
@@ -26,4 +25,4 @@ export type TextInputTemplateArgs = Partial<TextInputState> &
 
 export type TextInputStoryArgs = Partial<
   Omit<TextInputState, "passwordVisible">
->;
+> & { value?: string };

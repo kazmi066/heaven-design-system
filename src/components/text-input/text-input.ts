@@ -25,7 +25,6 @@ export class HdsTextInput extends HTMLElement {
   private readonly root: ShadowRoot;
   private readonly _input: HTMLInputElement;
   private readonly _toggle: HTMLButtonElement;
-  private _value?: string;
   private _passwordVisible = false;
 
   constructor() {
@@ -52,13 +51,11 @@ export class HdsTextInput extends HTMLElement {
   }
 
   connectedCallback(): void {
-    this._input.addEventListener("input", this.handleInput);
     this._toggle.addEventListener("click", this.handleToggle);
     this.sync();
   }
 
   disconnectedCallback(): void {
-    this._input.removeEventListener("input", this.handleInput);
     this._toggle.removeEventListener("click", this.handleToggle);
   }
 
@@ -68,7 +65,7 @@ export class HdsTextInput extends HTMLElement {
     newValue: string | null,
   ): void {
     if (name === "value") {
-      this._value = newValue ?? "";
+      this._input.value = newValue || "";
     }
 
     if (name === "type" && newValue !== "password") {
@@ -85,9 +82,7 @@ export class HdsTextInput extends HTMLElement {
   }
 
   set value(value: string) {
-    this._value = String(value ?? "");
-
-    this._input.value = this._value;
+    this._input.value = value;
   }
 
   get errorMessage(): string {
@@ -135,7 +130,6 @@ export class HdsTextInput extends HTMLElement {
       name: this.getAttribute("name") || "",
       placeholder: this.getAttribute("placeholder") || "",
       autocomplete: this.getAttribute("autocomplete") || "",
-      value: this._value ?? this.getAttribute("value") ?? "",
       ariaLabel: this.getAttribute("aria-label") || "",
       errorMessage: this.errorMessage,
       passwordVisible: this._passwordVisible,
@@ -144,12 +138,6 @@ export class HdsTextInput extends HTMLElement {
       required: this.hasAttribute("required"),
     };
   }
-
-  private readonly handleInput = (event: Event): void => {
-    if (event.target instanceof HTMLInputElement) {
-      this._value = event.target.value;
-    }
-  };
 
   private readonly handleToggle = (): void => {
     if (this.getAttribute("type") !== "password") {

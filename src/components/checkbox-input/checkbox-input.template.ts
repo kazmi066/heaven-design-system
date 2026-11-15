@@ -86,10 +86,12 @@ export const css = (): string => `
         outline-offset: 2px;
       }
 
+      &:user-invalid,
       &[aria-invalid="true"] {
         border-color: var(--hds-color-danger);
       }
 
+      &:user-invalid:focus-visible,
       &[aria-invalid="true"]:focus-visible {
         outline-color: var(--hds-color-danger);
       }
@@ -106,8 +108,8 @@ export const css = (): string => `
       opacity: 0.65;
     }
 
-    .hds-checkbox-input__label[hidden],
-    .hds-checkbox-input__error[hidden] {
+    .hds-checkbox-input__label:empty,
+    .hds-checkbox-input__error:empty {
       display: none;
     }
 
@@ -171,20 +173,14 @@ export const html = ({
         class="hds-checkbox-input__label"
         id="${labelId}"
         data-label
-        ${label ? "" : "hidden"}
-      >
-        ${label}
-      </span>
+      >${label}</span>
     </label>
     <span
       class="hds-checkbox-input__error"
       id="${errorId}"
       data-error
       role="alert"
-      ${errorMessage ? "" : "hidden"}
-    >
-      ${errorMessage}
-    </span>
+    >${errorMessage}</span>
   </span>
 `;
 
@@ -217,7 +213,6 @@ const Template = {
     }
 
     label.textContent = state.label;
-    label.hidden = !state.label;
 
     input.value = state.value;
     input.checked = state.checked;
@@ -238,14 +233,12 @@ const Template = {
 
     input.setCustomValidity(state.errorMessage);
 
+    error.textContent = state.errorMessage;
+
     if (hasError) {
-      error.hidden = false;
-      error.textContent = state.errorMessage;
       input.setAttribute("aria-invalid", "true");
       input.setAttribute("aria-describedby", error.id);
     } else {
-      error.textContent = "";
-      error.hidden = true;
       input.removeAttribute("aria-invalid");
       input.removeAttribute("aria-describedby");
     }

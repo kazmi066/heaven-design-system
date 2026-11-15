@@ -81,7 +81,7 @@ export const css = (): string => `
       opacity: 0.65;
     }
 
-    .hds-radio-input__label[hidden] {
+    .hds-radio-input__label:empty {
       display: none;
     }
 
@@ -128,10 +128,7 @@ export const html = ({
       class="hds-radio-input__label"
       id="${labelId}"
       data-label
-      ${label ? "" : "hidden"}
-    >
-      ${label}
-    </span>
+    >${label}</span>
   </label>
 `;
 
@@ -163,7 +160,6 @@ const Template = {
     }
 
     label.textContent = state.label;
-    label.hidden = !state.label;
 
     input.value = state.value;
     input.checked = state.checked;
