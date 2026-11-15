@@ -56,7 +56,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "`hds-select-input` is a native `select` element with an accessible label, chevron affordance, and validation error region.",
+          "`hds-select-input` is a native `select` element with an accessible label, chevron affordance, and validation error region. It is form-associated, so the `name` and selected value are submitted with the surrounding form and reset with it.",
       },
     },
   },

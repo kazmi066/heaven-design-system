@@ -8,10 +8,12 @@ const includes = <T extends string>(
 ): value is T => values.includes(value as T);
 
 export class HdsButton extends HTMLElement {
+  static formAssociated = true;
   // variant and size are styled from the host attribute in CSS.
   static observedAttributes = ["type", "disabled", "loading", "loading-label"];
 
   private readonly root: ShadowRoot;
+  private readonly internals = this.attachInternals();
 
   constructor() {
     super();
@@ -20,6 +22,16 @@ export class HdsButton extends HTMLElement {
   }
 
   connectedCallback(): void {
+    this.root.addEventListener("click", this.handleClick);
+    this.sync();
+  }
+
+  disconnectedCallback(): void {
+    this.root.removeEventListener("click", this.handleClick);
+  }
+
+  // Fires for the host's own disabled attribute and for a disabled fieldset.
+  formDisabledCallback(): void {
     this.sync();
   }
 
@@ -44,11 +56,28 @@ export class HdsButton extends HTMLElement {
       type: includes(BUTTON_TYPES, type)
         ? type
         : ("button" satisfies ButtonType),
-      disabled: this.hasAttribute("disabled"),
+      disabled: this.matches(":disabled"),
       loading: this.loading,
       loadingLabel: this.getAttribute("loading-label") || "Loading…",
     };
   }
+
+  // The inner button sits in the shadow tree and has no form owner, so the
+  // host submits or resets its form.
+  private readonly handleClick = (): void => {
+    const { form } = this.internals;
+    const { type, disabled, loading } = this.state;
+
+    if (!form || disabled || loading) {
+      return;
+    }
+
+    if (type === "submit") {
+      form.requestSubmit();
+    } else if (type === "reset") {
+      form.reset();
+    }
+  };
 
   private sync(): void {
     Template.update(this.root, this.state);

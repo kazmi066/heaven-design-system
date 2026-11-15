@@ -8,6 +8,7 @@ const isTextInputType = (value: string): value is TextInputType =>
 let textInputInstance = 0;
 
 export class HdsTextInput extends HTMLElement {
+  static formAssociated = true;
   static observedAttributes = [
     "label",
     "type",
@@ -23,6 +24,7 @@ export class HdsTextInput extends HTMLElement {
   ];
 
   private readonly root: ShadowRoot;
+  private readonly internals = this.attachInternals();
   private readonly _input: HTMLInputElement;
   private readonly _toggle: HTMLButtonElement;
   private _passwordVisible = false;
@@ -51,11 +53,15 @@ export class HdsTextInput extends HTMLElement {
   }
 
   connectedCallback(): void {
+    this._input.addEventListener("input", this.handleInput);
+    this._input.addEventListener("keydown", this.handleKeydown);
     this._toggle.addEventListener("click", this.handleToggle);
     this.sync();
   }
 
   disconnectedCallback(): void {
+    this._input.removeEventListener("input", this.handleInput);
+    this._input.removeEventListener("keydown", this.handleKeydown);
     this._toggle.removeEventListener("click", this.handleToggle);
   }
 
@@ -83,6 +89,22 @@ export class HdsTextInput extends HTMLElement {
 
   set value(value: string) {
     this._input.value = value;
+    this.sync();
+  }
+
+  formResetCallback(): void {
+    this._input.value = this.getAttribute("value") || "";
+    this.sync();
+  }
+
+  // Fires for the host's own disabled attribute and for a disabled fieldset.
+  formDisabledCallback(): void {
+    this.sync();
+  }
+
+  formStateRestoreCallback(state: string): void {
+    this._input.value = state;
+    this.sync();
   }
 
   get errorMessage(): string {
@@ -133,11 +155,22 @@ export class HdsTextInput extends HTMLElement {
       ariaLabel: this.getAttribute("aria-label") || "",
       errorMessage: this.errorMessage,
       passwordVisible: this._passwordVisible,
-      disabled: this.hasAttribute("disabled"),
+      disabled: this.matches(":disabled"),
       readonly: this.hasAttribute("readonly"),
       required: this.hasAttribute("required"),
     };
   }
+
+  private readonly handleInput = (): void => {
+    this.sync();
+  };
+
+  // A shadow input has no form owner, so Enter does not submit on its own.
+  private readonly handleKeydown = (event: KeyboardEvent): void => {
+    if (event.key === "Enter" && !event.isComposing) {
+      this.internals.form?.requestSubmit();
+    }
+  };
 
   private readonly handleToggle = (): void => {
     if (this.getAttribute("type") !== "password") {
@@ -150,6 +183,15 @@ export class HdsTextInput extends HTMLElement {
 
   private sync(): void {
     Template.update(this.root, this.state);
+
+    // The control lives in the shadow tree, so the form cannot see it. Hand
+    // its value and validity to the form through ElementInternals.
+    this.internals.setFormValue(this._input.value);
+    this.internals.setValidity(
+      this._input.validity,
+      this._input.validationMessage,
+      this._input,
+    );
   }
 }
 

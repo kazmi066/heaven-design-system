@@ -47,7 +47,7 @@ const meta = {
     docs: {
       description: {
         component:
-          '`hds-range-input` is a native `input type="range"` with an accessible label, live value readout, and validation error region.',
+          '`hds-range-input` is a native `input type="range"` with an accessible label, live value readout, and validation error region. It is form-associated, so the `name` and value are submitted with the surrounding form and reset with it.',
       },
     },
   },

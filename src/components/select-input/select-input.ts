@@ -4,6 +4,7 @@ import type { SelectInputState } from "./select-input.types.js";
 let selectInputInstance = 0;
 
 export class HdsSelectInput extends HTMLElement {
+  static formAssociated = true;
   static observedAttributes = [
     "label",
     "name",
@@ -16,6 +17,7 @@ export class HdsSelectInput extends HTMLElement {
   ];
 
   private readonly root: ShadowRoot;
+  private readonly internals = this.attachInternals();
   private readonly _select: HTMLSelectElement;
 
   constructor() {
@@ -38,7 +40,12 @@ export class HdsSelectInput extends HTMLElement {
   }
 
   connectedCallback(): void {
+    this._select.addEventListener("change", this.handleChange);
     this.sync();
+  }
+
+  disconnectedCallback(): void {
+    this._select.removeEventListener("change", this.handleChange);
   }
 
   attributeChangedCallback(
@@ -61,6 +68,22 @@ export class HdsSelectInput extends HTMLElement {
 
   set value(value: string) {
     this._select.value = value;
+    this.sync();
+  }
+
+  formResetCallback(): void {
+    this._select.value = this.getAttribute("value") || "";
+    this.sync();
+  }
+
+  // Fires for the host's own disabled attribute and for a disabled fieldset.
+  formDisabledCallback(): void {
+    this.sync();
+  }
+
+  formStateRestoreCallback(state: string): void {
+    this._select.value = state;
+    this.sync();
   }
 
   get options(): HTMLOptionsCollection {
@@ -73,6 +96,7 @@ export class HdsSelectInput extends HTMLElement {
 
   set selectedIndex(value: number) {
     this._select.selectedIndex = value;
+    this.sync();
   }
 
   get errorMessage(): string {
@@ -123,13 +147,26 @@ export class HdsSelectInput extends HTMLElement {
         label: child.textContent ?? "",
         disabled: child.hasAttribute("disabled"),
       })),
-      disabled: this.hasAttribute("disabled"),
+      disabled: this.matches(":disabled"),
       required: this.hasAttribute("required"),
     };
   }
 
+  private readonly handleChange = (): void => {
+    this.sync();
+  };
+
   private sync(): void {
     Template.update(this.root, this.state);
+
+    // The control lives in the shadow tree, so the form cannot see it. Hand
+    // its value and validity to the form through ElementInternals.
+    this.internals.setFormValue(this._select.value);
+    this.internals.setValidity(
+      this._select.validity,
+      this._select.validationMessage,
+      this._select,
+    );
   }
 }
 

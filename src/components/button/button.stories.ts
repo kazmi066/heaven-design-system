@@ -76,7 +76,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "`hds-button` is the primary action element. Use **default** for primary actions, **secondary** for neutral actions, and semantic variants sparingly to signal intent.",
+          '`hds-button` is the primary action element. Use **default** for primary actions, **secondary** for neutral actions, and semantic variants sparingly to signal intent. Inside a form, `type="submit"` submits it and `type="reset"` resets it, and a disabled `fieldset` disables the button.',
       },
     },
   },

@@ -52,7 +52,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "`hds-text-input` is a labeled text-entry control with an accessible validation error region. Password fields include a Show and Hide control next to the label.",
+          "`hds-text-input` is a labeled text-entry control with an accessible validation error region. Password fields include a Show and Hide control next to the label. It is form-associated: the `name` and value are submitted with the surrounding form, `required` blocks submission, Enter submits, and form reset restores the `value` attribute.",
       },
     },
   },

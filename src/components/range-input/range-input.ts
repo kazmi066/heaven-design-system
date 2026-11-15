@@ -4,6 +4,7 @@ import type { RangeInputState } from "./range-input.types.js";
 let rangeInputInstance = 0;
 
 export class HdsRangeInput extends HTMLElement {
+  static formAssociated = true;
   static observedAttributes = [
     "label",
     "name",
@@ -17,6 +18,7 @@ export class HdsRangeInput extends HTMLElement {
   ];
 
   private readonly root: ShadowRoot;
+  private readonly internals = this.attachInternals();
   private readonly _input: HTMLInputElement;
 
   constructor() {
@@ -70,6 +72,21 @@ export class HdsRangeInput extends HTMLElement {
     this.sync();
   }
 
+  formResetCallback(): void {
+    this._input.value = this.getAttribute("value") || "";
+    this.sync();
+  }
+
+  // Fires for the host's own disabled attribute and for a disabled fieldset.
+  formDisabledCallback(): void {
+    this.sync();
+  }
+
+  formStateRestoreCallback(state: string): void {
+    this._input.value = state;
+    this.sync();
+  }
+
   get errorMessage(): string {
     return this.getAttribute("error-message") || "";
   }
@@ -116,7 +133,7 @@ export class HdsRangeInput extends HTMLElement {
       step: this.getAttribute("step") || "1",
       ariaLabel: this.getAttribute("aria-label") || "",
       errorMessage: this.errorMessage,
-      disabled: this.hasAttribute("disabled"),
+      disabled: this.matches(":disabled"),
     };
   }
 
@@ -128,6 +145,15 @@ export class HdsRangeInput extends HTMLElement {
 
   private sync(): void {
     Template.update(this.root, this.state);
+
+    // The control lives in the shadow tree, so the form cannot see it. Hand
+    // its value and validity to the form through ElementInternals.
+    this.internals.setFormValue(this._input.value);
+    this.internals.setValidity(
+      this._input.validity,
+      this._input.validationMessage,
+      this._input,
+    );
   }
 }
 
