@@ -1,5 +1,7 @@
 import Template from "./text-input.template.js";
 import { TEXT_INPUT_TYPES } from "./text-input.constants.js";
+import { find } from "../shared/field.js";
+import { HdsFormControl } from "../shared/form-control.js";
 import type { TextInputState, TextInputType } from "./text-input.types.js";
 
 const isTextInputType = (value: string): value is TextInputType =>
@@ -7,8 +9,7 @@ const isTextInputType = (value: string): value is TextInputType =>
 
 let textInputInstance = 0;
 
-export class HdsTextInput extends HTMLElement {
-  static formAssociated = true;
+export class HdsTextInput extends HdsFormControl<HTMLInputElement> {
   static observedAttributes = [
     "label",
     "type",
@@ -23,124 +24,45 @@ export class HdsTextInput extends HTMLElement {
     "required",
   ];
 
-  private readonly root: ShadowRoot;
-  private readonly internals = this.attachInternals();
-  private readonly _input: HTMLInputElement;
-  private readonly _toggle: HTMLButtonElement;
-  private _passwordVisible = false;
+  protected readonly control: HTMLInputElement;
+  private readonly toggle: HTMLButtonElement;
+  private passwordVisible = false;
 
   constructor() {
     super();
     const instanceId = ++textInputInstance;
 
-    this.root = this.attachShadow({ mode: "open" });
     this.root.innerHTML = Template.render({
       ...this.state,
       controlId: `hds-text-input-${instanceId}-control`,
       errorId: `hds-text-input-${instanceId}-error`,
     });
-    const input = this.root.querySelector<HTMLInputElement>("input");
-    const toggle = this.root.querySelector<HTMLButtonElement>(
-      "[data-password-toggle]",
-    );
-
-    if (!input || !toggle) {
-      throw new Error("Text input control is unavailable.");
-    }
-
-    this._input = input;
-    this._toggle = toggle;
+    this.control = find<HTMLInputElement>(this.root, "input");
+    this.toggle = find<HTMLButtonElement>(this.root, "[data-password-toggle]");
   }
 
-  connectedCallback(): void {
-    this._input.addEventListener("input", this.handleInput);
-    this._input.addEventListener("keydown", this.handleKeydown);
-    this._toggle.addEventListener("click", this.handleToggle);
-    this.sync();
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.control.addEventListener("keydown", this.handleKeydown);
+    this.toggle.addEventListener("click", this.handleToggle);
   }
 
-  disconnectedCallback(): void {
-    this._input.removeEventListener("input", this.handleInput);
-    this._input.removeEventListener("keydown", this.handleKeydown);
-    this._toggle.removeEventListener("click", this.handleToggle);
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.control.removeEventListener("keydown", this.handleKeydown);
+    this.toggle.removeEventListener("click", this.handleToggle);
   }
 
-  attributeChangedCallback(
+  override attributeChangedCallback(
     name: string,
-    _oldValue: string | null,
+    oldValue: string | null,
     newValue: string | null,
   ): void {
-    if (name === "value") {
-      this._input.value = newValue || "";
-    }
-
     if (name === "type" && newValue !== "password") {
-      this._passwordVisible = false;
+      this.passwordVisible = false;
     }
 
-    if (this.root.hasChildNodes()) {
-      this.sync();
-    }
-  }
-
-  get value(): string {
-    return this._input.value;
-  }
-
-  set value(value: string) {
-    this._input.value = value;
-    this.sync();
-  }
-
-  formResetCallback(): void {
-    this._input.value = this.getAttribute("value") || "";
-    this.sync();
-  }
-
-  // Fires for the host's own disabled attribute and for a disabled fieldset.
-  formDisabledCallback(): void {
-    this.sync();
-  }
-
-  formStateRestoreCallback(state: string): void {
-    this._input.value = state;
-    this.sync();
-  }
-
-  get errorMessage(): string {
-    return this.getAttribute("error-message") || "";
-  }
-
-  set errorMessage(value: string) {
-    if (value) {
-      this.setAttribute("error-message", value);
-    } else {
-      this.removeAttribute("error-message");
-    }
-  }
-
-  get validity(): ValidityState {
-    return this._input.validity;
-  }
-
-  get validationMessage(): string {
-    return this._input.validationMessage;
-  }
-
-  get willValidate(): boolean {
-    return this._input.willValidate;
-  }
-
-  checkValidity(): boolean {
-    return this._input.checkValidity();
-  }
-
-  reportValidity(): boolean {
-    return this._input.reportValidity();
-  }
-
-  override focus(options?: FocusOptions): void {
-    this._input.focus(options);
+    super.attributeChangedCallback(name, oldValue, newValue);
   }
 
   private get state(): TextInputState {
@@ -154,16 +76,16 @@ export class HdsTextInput extends HTMLElement {
       autocomplete: this.getAttribute("autocomplete") || "",
       ariaLabel: this.getAttribute("aria-label") || "",
       errorMessage: this.errorMessage,
-      passwordVisible: this._passwordVisible,
+      passwordVisible: this.passwordVisible,
       disabled: this.matches(":disabled"),
       readonly: this.hasAttribute("readonly"),
       required: this.hasAttribute("required"),
     };
   }
 
-  private readonly handleInput = (): void => {
-    this.sync();
-  };
+  protected render(): void {
+    Template.update(this.root, this.state);
+  }
 
   // A shadow input has no form owner, so Enter does not submit on its own.
   private readonly handleKeydown = (event: KeyboardEvent): void => {
@@ -177,22 +99,9 @@ export class HdsTextInput extends HTMLElement {
       return;
     }
 
-    this._passwordVisible = !this._passwordVisible;
+    this.passwordVisible = !this.passwordVisible;
     this.sync();
   };
-
-  private sync(): void {
-    Template.update(this.root, this.state);
-
-    // The control lives in the shadow tree, so the form cannot see it. Hand
-    // its value and validity to the form through ElementInternals.
-    this.internals.setFormValue(this._input.value);
-    this.internals.setValidity(
-      this._input.validity,
-      this._input.validationMessage,
-      this._input,
-    );
-  }
 }
 
 if (!customElements.get("hds-text-input")) {

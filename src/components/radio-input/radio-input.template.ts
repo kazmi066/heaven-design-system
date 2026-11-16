@@ -1,3 +1,4 @@
+import { attribute, find, setStringAttribute } from "../shared/field.js";
 import type {
   RadioInputState,
   RadioInputTemplateArgs,
@@ -120,9 +121,6 @@ export const css = (): string => `
   </style>
 `;
 
-const attribute = (name: string, value: string): string =>
-  value ? `${name}="${value}"` : "";
-
 export const html = ({
   label = "",
   name = "",
@@ -152,32 +150,14 @@ export const html = ({
   </label>
 `;
 
-const setStringAttribute = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-): void => {
-  if (value) {
-    element.setAttribute(name, value);
-  } else {
-    element.removeAttribute(name);
-  }
-};
-
 const Template = {
   render(args: RadioInputTemplateArgs = {}): string {
     return html(args);
   },
 
   update(root: HTMLElement, state: RadioInputState): void {
-    const label = root.querySelector<HTMLElement>("[data-label]");
-    const input = root.querySelector<HTMLInputElement>(
-      ".hds-radio-input__control",
-    );
-
-    if (!label || !input) {
-      throw new Error("Radio input template is missing required elements.");
-    }
+    const label = find<HTMLElement>(root, "[data-label]");
+    const input = find<HTMLInputElement>(root, ".hds-radio-input__control");
 
     label.textContent = state.label;
 
@@ -188,11 +168,7 @@ const Template = {
     setStringAttribute(input, "name", state.name);
     setStringAttribute(input, "aria-label", state.label ? "" : state.ariaLabel);
 
-    if (state.label) {
-      input.setAttribute("aria-labelledby", label.id);
-    } else {
-      input.removeAttribute("aria-labelledby");
-    }
+    setStringAttribute(input, "aria-labelledby", state.label ? label.id : "");
   },
 };
 

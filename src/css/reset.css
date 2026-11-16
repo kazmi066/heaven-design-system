@@ -70,7 +70,6 @@ h6 {
   text-wrap: balance;
 }
 
-/* Remove default margin in favour of better control in authored CSS */
 body,
 h1,
 h2,
@@ -84,7 +83,6 @@ dd {
   margin-block-end: 0;
 }
 
-/* Make images easier to work with */
 img,
 picture,
 video,

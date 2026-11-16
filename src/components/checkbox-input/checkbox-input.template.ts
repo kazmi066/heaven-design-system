@@ -1,3 +1,10 @@
+import {
+  attribute,
+  errorStyles,
+  find,
+  setError,
+  setStringAttribute,
+} from "../shared/field.js";
 import type {
   CheckboxInputState,
   CheckboxInputTemplateArgs,
@@ -120,42 +127,15 @@ export const css = (): string => `
       opacity: 0.6;
     }
 
-    /* The control's required attribute tells assistive tech. The empty alt
-       text keeps the asterisk from being read out as well. */
     hds-checkbox-input[required] .hds-checkbox-input__label::after {
       content: " *" / "";
       color: var(--hds-color-text-danger);
     }
 
+${errorStyles("hds-checkbox-input")}
+
     .hds-checkbox-input__error {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--hds-space-2xs);
-      margin: 0;
       margin-inline-start: calc(var(--_size) + var(--hds-space-xs));
-      color: var(--hds-color-text-danger);
-      font-size: var(--hds-font-size-sm);
-      font-weight: var(--hds-font-weight-regular);
-      line-height: var(--hds-line-height-normal);
-      transition-property: opacity, translate;
-      transition-duration: var(--hds-duration-slow);
-      transition-timing-function: var(--hds-ease-out);
-
-      /* An icon as well as color, so the error does not rely on color. */
-      &::before {
-        content: "";
-        flex: none;
-        inline-size: 1em;
-        block-size: 1lh;
-        background: currentColor;
-        mask: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM9 6a1 1 0 1 1 2 0v4a1 1 0 1 1-2 0V6Zm1 9a1.25 1.25 0 1 0 0-2.5A1.25 1.25 0 0 0 10 15Z%22/%3E%3C/svg%3E') center / 1em no-repeat;
-      }
-
-      /* Slides in when a message appears. */
-      @starting-style {
-        opacity: 0;
-        translate: 0 -0.25rem;
-      }
     }
 
     .hds-checkbox-input__label:empty,
@@ -190,9 +170,6 @@ export const css = (): string => `
     }
   </style>
 `;
-
-const attribute = (name: string, value: string): string =>
-  value ? `${name}="${value}"` : "";
 
 export const html = ({
   label = "",
@@ -235,33 +212,15 @@ export const html = ({
   </span>
 `;
 
-const setStringAttribute = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-): void => {
-  if (value) {
-    element.setAttribute(name, value);
-  } else {
-    element.removeAttribute(name);
-  }
-};
-
 const Template = {
   render(args: CheckboxInputTemplateArgs = {}): string {
     return html(args);
   },
 
   update(root: HTMLElement, state: CheckboxInputState): void {
-    const label = root.querySelector<HTMLElement>("[data-label]");
-    const input = root.querySelector<HTMLInputElement>(
-      ".hds-checkbox-input__control",
-    );
-    const error = root.querySelector<HTMLElement>("[data-error]");
-
-    if (!label || !input || !error) {
-      throw new Error("Checkbox input template is missing required elements.");
-    }
+    const label = find<HTMLElement>(root, "[data-label]");
+    const input = find<HTMLInputElement>(root, ".hds-checkbox-input__control");
+    const error = find<HTMLElement>(root, "[data-error]");
 
     label.textContent = state.label;
 
@@ -274,25 +233,9 @@ const Template = {
     setStringAttribute(input, "name", state.name);
     setStringAttribute(input, "aria-label", state.label ? "" : state.ariaLabel);
 
-    if (state.label) {
-      input.setAttribute("aria-labelledby", label.id);
-    } else {
-      input.removeAttribute("aria-labelledby");
-    }
+    setStringAttribute(input, "aria-labelledby", state.label ? label.id : "");
 
-    const hasError = Boolean(state.errorMessage);
-
-    input.setCustomValidity(state.errorMessage);
-
-    error.textContent = state.errorMessage;
-
-    if (hasError) {
-      input.setAttribute("aria-invalid", "true");
-      input.setAttribute("aria-describedby", error.id);
-    } else {
-      input.removeAttribute("aria-invalid");
-      input.removeAttribute("aria-describedby");
-    }
+    setError(input, error, state.errorMessage);
   },
 };
 

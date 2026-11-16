@@ -1,3 +1,10 @@
+import {
+  attribute,
+  errorStyles,
+  find,
+  setError,
+  setStringAttribute,
+} from "../shared/field.js";
 import type {
   TextInputState,
   TextInputTemplateArgs,
@@ -26,8 +33,6 @@ export const css = (): string => `
       line-height: var(--hds-line-height-normal);
     }
 
-    /* The control's required attribute tells assistive tech. The empty alt
-       text keeps the asterisk from being read out as well. */
     :host([required]) .hds-text-input__label::after {
       content: " *" / "";
       color: var(--hds-color-text-danger);
@@ -152,34 +157,7 @@ export const css = (): string => `
       height: 1rem;
     }
 
-    .hds-text-input__error {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--hds-space-2xs);
-      margin: 0;
-      color: var(--hds-color-text-danger);
-      font-size: var(--hds-font-size-sm);
-      line-height: var(--hds-line-height-normal);
-      transition-property: opacity, translate;
-      transition-duration: var(--hds-duration-slow);
-      transition-timing-function: var(--hds-ease-out);
-
-      /* An icon as well as color, so the error does not rely on color. */
-      &::before {
-        content: "";
-        flex: none;
-        inline-size: 1em;
-        block-size: 1lh;
-        background: currentColor;
-        mask: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM9 6a1 1 0 1 1 2 0v4a1 1 0 1 1-2 0V6Zm1 9a1.25 1.25 0 1 0 0-2.5A1.25 1.25 0 0 0 10 15Z%22/%3E%3C/svg%3E') center / 1em no-repeat;
-      }
-
-      /* Slides in when a message appears. */
-      @starting-style {
-        opacity: 0;
-        translate: 0 -0.25rem;
-      }
-    }
+${errorStyles("hds-text-input")}
 
     .hds-text-input__label:empty,
     .hds-text-input__error:empty {
@@ -201,9 +179,6 @@ export const css = (): string => `
     }
   </style>
 `;
-
-const attribute = (name: string, value: string): string =>
-  value ? `${name}="${value}"` : "";
 
 export const html = ({
   label = "",
@@ -293,18 +268,6 @@ export const html = ({
   </div>
 `;
 
-const setStringAttribute = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-): void => {
-  if (value) {
-    element.setAttribute(name, value);
-  } else {
-    element.removeAttribute(name);
-  }
-};
-
 const Template = {
   render(args: TextInputTemplateArgs = {}): string {
     return `
@@ -314,29 +277,13 @@ const Template = {
   },
 
   update(root: ShadowRoot, state: TextInputState): void {
-    const label = root.querySelector<HTMLLabelElement>("[data-label]");
-    const toggle = root.querySelector<HTMLButtonElement>(
-      "[data-password-toggle]",
-    );
-    const toggleLabel = root.querySelector<HTMLElement>("[data-toggle-label]");
-    const showIcon = root.querySelector<SVGElement>("[data-icon-show]");
-    const hideIcon = root.querySelector<SVGElement>("[data-icon-hide]");
-    const input = root.querySelector<HTMLInputElement>(
-      ".hds-text-input__control",
-    );
-    const error = root.querySelector<HTMLElement>("[data-error]");
-
-    if (
-      !label ||
-      !toggle ||
-      !toggleLabel ||
-      !showIcon ||
-      !hideIcon ||
-      !input ||
-      !error
-    ) {
-      throw new Error("Text input template is missing required elements.");
-    }
+    const label = find<HTMLLabelElement>(root, "[data-label]");
+    const toggle = find<HTMLButtonElement>(root, "[data-password-toggle]");
+    const toggleLabel = find<HTMLElement>(root, "[data-toggle-label]");
+    const showIcon = find<SVGElement>(root, "[data-icon-show]");
+    const hideIcon = find<SVGElement>(root, "[data-icon-hide]");
+    const input = find<HTMLInputElement>(root, ".hds-text-input__control");
+    const error = find<HTMLElement>(root, "[data-error]");
 
     label.textContent = state.label;
 
@@ -365,19 +312,7 @@ const Template = {
     setStringAttribute(input, "autocomplete", state.autocomplete);
     setStringAttribute(input, "aria-label", state.ariaLabel);
 
-    const hasError = Boolean(state.errorMessage);
-
-    input.setCustomValidity(state.errorMessage);
-
-    error.textContent = state.errorMessage;
-
-    if (hasError) {
-      input.setAttribute("aria-invalid", "true");
-      input.setAttribute("aria-describedby", error.id);
-    } else {
-      input.removeAttribute("aria-invalid");
-      input.removeAttribute("aria-describedby");
-    }
+    setError(input, error, state.errorMessage);
   },
 };
 

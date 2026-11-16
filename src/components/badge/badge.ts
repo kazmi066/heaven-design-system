@@ -1,6 +1,5 @@
 import Template from "./badge.template.js";
 
-// Variants are styled from the host attribute, so no script runs after render.
 export class HdsBadge extends HTMLElement {
   constructor() {
     super();

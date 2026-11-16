@@ -1,8 +1,5 @@
 import { css } from "./accordion.template.js";
 
-// The sections are native details elements written by the consumer, so the
-// browser handles toggling, keyboard support, and exclusive groups (via the
-// name attribute). The element only supplies the styles.
 export class HdsAccordion extends HTMLElement {
   connectedCallback(): void {
     if (!document.getElementById("hds-accordion-styles")) {

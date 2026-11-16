@@ -1,3 +1,4 @@
+import { setStringAttribute } from "../shared/field.js";
 import Template, { css } from "./checkbox-input.template.js";
 import type { CheckboxInputState } from "./checkbox-input.types.js";
 
@@ -132,11 +133,7 @@ export class HdsCheckboxInput extends HTMLElement {
   }
 
   set name(value: string) {
-    if (value) {
-      this.setAttribute("name", value);
-    } else {
-      this.removeAttribute("name");
-    }
+    setStringAttribute(this, "name", value);
   }
 
   get value(): string {
@@ -154,11 +151,7 @@ export class HdsCheckboxInput extends HTMLElement {
   }
 
   set errorMessage(value: string) {
-    if (value) {
-      this.setAttribute("error-message", value);
-    } else {
-      this.removeAttribute("error-message");
-    }
+    setStringAttribute(this, "error-message", value);
   }
 
   get validity(): ValidityState {

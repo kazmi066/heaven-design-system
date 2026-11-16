@@ -45,7 +45,6 @@ export const css = (): string => `
         display: none;
       }
 
-      /* Chevron in a soft circle that turns when the section opens. */
       &::after {
         content: "";
         flex: none;

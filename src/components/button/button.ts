@@ -9,7 +9,6 @@ const includes = <T extends string>(
 
 export class HdsButton extends HTMLElement {
   static formAssociated = true;
-  // variant and size are styled from the host attribute in CSS.
   static observedAttributes = ["type", "disabled", "loading", "loading-label"];
 
   private readonly root: ShadowRoot;
@@ -30,7 +29,6 @@ export class HdsButton extends HTMLElement {
     this.root.removeEventListener("click", this.handleClick);
   }
 
-  // Fires for the host's own disabled attribute and for a disabled fieldset.
   formDisabledCallback(): void {
     this.sync();
   }

@@ -1,3 +1,4 @@
+import { setStringAttribute } from "../shared/field.js";
 import Template, { css } from "./radio-input.template.js";
 import type { RadioInputState } from "./radio-input.types.js";
 
@@ -91,11 +92,7 @@ export class HdsRadioInput extends HTMLElement {
   }
 
   set name(value: string) {
-    if (value) {
-      this.setAttribute("name", value);
-    } else {
-      this.removeAttribute("name");
-    }
+    setStringAttribute(this, "name", value);
   }
 
   get value(): string {

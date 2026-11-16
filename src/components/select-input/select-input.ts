@@ -1,10 +1,11 @@
 import Template from "./select-input.template.js";
+import { find } from "../shared/field.js";
+import { HdsFormControl } from "../shared/form-control.js";
 import type { SelectInputState } from "./select-input.types.js";
 
 let selectInputInstance = 0;
 
-export class HdsSelectInput extends HTMLElement {
-  static formAssociated = true;
+export class HdsSelectInput extends HdsFormControl<HTMLSelectElement> {
   static observedAttributes = [
     "label",
     "name",
@@ -16,123 +17,31 @@ export class HdsSelectInput extends HTMLElement {
     "required",
   ];
 
-  private readonly root: ShadowRoot;
-  private readonly internals = this.attachInternals();
-  private readonly _select: HTMLSelectElement;
+  protected readonly control: HTMLSelectElement;
 
   constructor() {
     super();
     const instanceId = ++selectInputInstance;
 
-    this.root = this.attachShadow({ mode: "open" });
     this.root.innerHTML = Template.render({
       ...this.state,
       controlId: `hds-select-input-${instanceId}-control`,
       errorId: `hds-select-input-${instanceId}-error`,
     });
-    const select = this.root.querySelector<HTMLSelectElement>("select");
-
-    if (!select) {
-      throw new Error("Select input control is unavailable.");
-    }
-
-    this._select = select;
-  }
-
-  connectedCallback(): void {
-    this._select.addEventListener("change", this.handleChange);
-    this.sync();
-  }
-
-  disconnectedCallback(): void {
-    this._select.removeEventListener("change", this.handleChange);
-  }
-
-  attributeChangedCallback(
-    name: string,
-    _oldValue: string | null,
-    newValue: string | null,
-  ): void {
-    if (name === "value") {
-      this._select.value = newValue || "";
-    }
-
-    if (this.root.hasChildNodes()) {
-      this.sync();
-    }
-  }
-
-  get value(): string {
-    return this._select.value;
-  }
-
-  set value(value: string) {
-    this._select.value = value;
-    this.sync();
-  }
-
-  formResetCallback(): void {
-    this._select.value = this.getAttribute("value") || "";
-    this.sync();
-  }
-
-  // Fires for the host's own disabled attribute and for a disabled fieldset.
-  formDisabledCallback(): void {
-    this.sync();
-  }
-
-  formStateRestoreCallback(state: string): void {
-    this._select.value = state;
-    this.sync();
+    this.control = find<HTMLSelectElement>(this.root, "select");
   }
 
   get options(): HTMLOptionsCollection {
-    return this._select.options;
+    return this.control.options;
   }
 
   get selectedIndex(): number {
-    return this._select.selectedIndex;
+    return this.control.selectedIndex;
   }
 
   set selectedIndex(value: number) {
-    this._select.selectedIndex = value;
+    this.control.selectedIndex = value;
     this.sync();
-  }
-
-  get errorMessage(): string {
-    return this.getAttribute("error-message") || "";
-  }
-
-  set errorMessage(value: string) {
-    if (value) {
-      this.setAttribute("error-message", value);
-    } else {
-      this.removeAttribute("error-message");
-    }
-  }
-
-  get validity(): ValidityState {
-    return this._select.validity;
-  }
-
-  get validationMessage(): string {
-    return this._select.validationMessage;
-  }
-
-  get willValidate(): boolean {
-    return this._select.willValidate;
-  }
-
-  checkValidity(): boolean {
-    return this._select.checkValidity();
-  }
-
-  reportValidity(): boolean {
-    return this._select.reportValidity();
-  }
-
-  override focus(options?: FocusOptions): void {
-    this._select.focus(options);
   }
 
   private get state(): SelectInputState {
@@ -152,21 +61,8 @@ export class HdsSelectInput extends HTMLElement {
     };
   }
 
-  private readonly handleChange = (): void => {
-    this.sync();
-  };
-
-  private sync(): void {
+  protected render(): void {
     Template.update(this.root, this.state);
-
-    // The control lives in the shadow tree, so the form cannot see it. Hand
-    // its value and validity to the form through ElementInternals.
-    this.internals.setFormValue(this._select.value);
-    this.internals.setValidity(
-      this._select.validity,
-      this._select.validationMessage,
-      this._select,
-    );
   }
 }
 

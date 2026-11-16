@@ -1,3 +1,10 @@
+import {
+  attribute,
+  errorStyles,
+  find,
+  setError,
+  setStringAttribute,
+} from "../shared/field.js";
 import type {
   SelectInputState,
   SelectInputTemplateArgs,
@@ -26,8 +33,6 @@ export const css = (): string => `
       line-height: var(--hds-line-height-normal);
     }
 
-    /* The control's required attribute tells assistive tech. The empty alt
-       text keeps the asterisk from being read out as well. */
     :host([required]) .hds-select-input__label::after {
       content: " *" / "";
       color: var(--hds-color-text-danger);
@@ -118,7 +123,6 @@ export const css = (): string => `
       color: var(--hds-color-text);
     }
 
-    /* Flips while the picker is open, where :open is supported. */
     .hds-select-input__control:open ~ .hds-select-input__chevron {
       rotate: 180deg;
     }
@@ -204,34 +208,7 @@ export const css = (): string => `
       }
     }
 
-    .hds-select-input__error {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--hds-space-2xs);
-      margin: 0;
-      color: var(--hds-color-text-danger);
-      font-size: var(--hds-font-size-sm);
-      line-height: var(--hds-line-height-normal);
-      transition-property: opacity, translate;
-      transition-duration: var(--hds-duration-slow);
-      transition-timing-function: var(--hds-ease-out);
-
-      /* An icon as well as color, so the error does not rely on color. */
-      &::before {
-        content: "";
-        flex: none;
-        inline-size: 1em;
-        block-size: 1lh;
-        background: currentColor;
-        mask: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 20 20%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM9 6a1 1 0 1 1 2 0v4a1 1 0 1 1-2 0V6Zm1 9a1.25 1.25 0 1 0 0-2.5A1.25 1.25 0 0 0 10 15Z%22/%3E%3C/svg%3E') center / 1em no-repeat;
-      }
-
-      /* Slides in when a message appears. */
-      @starting-style {
-        opacity: 0;
-        translate: 0 -0.25rem;
-      }
-    }
+${errorStyles("hds-select-input")}
 
     .hds-select-input__label:empty,
     .hds-select-input__error:empty {
@@ -258,9 +235,6 @@ export const css = (): string => `
     }
   </style>
 `;
-
-const attribute = (name: string, value: string): string =>
-  value ? `${name}="${value}"` : "";
 
 const optionMarkup = (
   value: string,
@@ -325,18 +299,6 @@ export const html = ({
   </div>
 `;
 
-const setStringAttribute = (
-  element: HTMLElement,
-  name: string,
-  value: string,
-): void => {
-  if (value) {
-    element.setAttribute(name, value);
-  } else {
-    element.removeAttribute(name);
-  }
-};
-
 const Template = {
   render(args: SelectInputTemplateArgs = {}): string {
     return `
@@ -346,15 +308,9 @@ const Template = {
   },
 
   update(root: ShadowRoot, state: SelectInputState): void {
-    const label = root.querySelector<HTMLLabelElement>("[data-label]");
-    const select = root.querySelector<HTMLSelectElement>(
-      ".hds-select-input__control",
-    );
-    const error = root.querySelector<HTMLElement>("[data-error]");
-
-    if (!label || !select || !error) {
-      throw new Error("Select input template is missing required elements.");
-    }
+    const label = find<HTMLLabelElement>(root, "[data-label]");
+    const select = find<HTMLSelectElement>(root, ".hds-select-input__control");
+    const error = find<HTMLElement>(root, "[data-error]");
 
     label.textContent = state.label;
 
@@ -368,19 +324,7 @@ const Template = {
       state.label ? "" : state.ariaLabel,
     );
 
-    const hasError = Boolean(state.errorMessage);
-
-    select.setCustomValidity(state.errorMessage);
-
-    error.textContent = state.errorMessage;
-
-    if (hasError) {
-      select.setAttribute("aria-invalid", "true");
-      select.setAttribute("aria-describedby", error.id);
-    } else {
-      select.removeAttribute("aria-invalid");
-      select.removeAttribute("aria-describedby");
-    }
+    setError(select, error, state.errorMessage);
   },
 };
 

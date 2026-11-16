@@ -1,3 +1,4 @@
+import { find, setStringAttribute } from "../shared/field.js";
 import { BREADCRUMB_LABEL } from "./breadcrumbs.constants.js";
 import type {
   BreadcrumbsState,
@@ -85,7 +86,6 @@ export const css = (): string => `
       transition-timing-function: var(--hds-ease-out);
     }
 
-    /* Hover adds a tint and an underline, so it does not rely on color. */
     ::slotted(a:hover) {
       background: var(--hds-color-surface-hover);
       color: var(--hds-color-text);
@@ -118,7 +118,6 @@ export const css = (): string => `
         border-color: CanvasText;
       }
 
-      /* Backgrounds and custom colors are removed, so underline every link. */
       ::slotted(a) {
         text-decoration-color: currentColor;
       }
@@ -147,14 +146,8 @@ const Template = {
     state: BreadcrumbsState,
     items: readonly HTMLElement[],
   ): void {
-    const nav = root.querySelector<HTMLElement>(".hds-breadcrumbs");
-    const list = root.querySelector<HTMLOListElement>(
-      ".hds-breadcrumbs__items",
-    );
-
-    if (!nav || !list) {
-      throw new Error("Breadcrumbs markup is unavailable.");
-    }
+    const nav = find<HTMLElement>(root, ".hds-breadcrumbs");
+    const list = find<HTMLOListElement>(root, ".hds-breadcrumbs__items");
 
     nav.setAttribute("aria-label", state.label);
 
@@ -174,11 +167,11 @@ const Template = {
     items.forEach((node, index) => {
       node.slot = `item-${index}`;
 
-      if (index === items.length - 1) {
-        node.setAttribute("aria-current", "page");
-      } else {
-        node.removeAttribute("aria-current");
-      }
+      setStringAttribute(
+        node,
+        "aria-current",
+        index === items.length - 1 ? "page" : "",
+      );
     });
   },
 };

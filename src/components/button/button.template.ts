@@ -1,3 +1,4 @@
+import { find, setStringAttribute } from "../shared/field.js";
 import type { ButtonState, ButtonTemplateArgs } from "./button.types.js";
 
 export const css = (): string => `
@@ -74,8 +75,6 @@ export const css = (): string => `
       transition-duration: var(--hds-duration-normal);
       transition-timing-function: var(--hds-ease-out);
 
-      /* Hover darkens, press shrinks, focus outlines. Each state stays
-         visible when combined with the others. */
       &:hover {
         background: var(
           --_bg-hover,
@@ -218,21 +217,13 @@ const Template = {
   },
 
   update(root: ShadowRoot, state: ButtonState): void {
-    const button = root.querySelector<HTMLButtonElement>(".hds-button");
-    const label = root.querySelector<HTMLElement>("[data-loading-label]");
-
-    if (!button || !label) {
-      throw new Error("Button template is missing required elements.");
-    }
+    const button = find<HTMLButtonElement>(root, ".hds-button");
+    const label = find<HTMLElement>(root, "[data-loading-label]");
 
     button.type = state.type;
     button.disabled = state.disabled || state.loading;
 
-    if (state.loading) {
-      button.setAttribute("aria-busy", "true");
-    } else {
-      button.removeAttribute("aria-busy");
-    }
+    setStringAttribute(button, "aria-busy", state.loading ? "true" : "");
 
     label.textContent = state.loadingLabel;
   },

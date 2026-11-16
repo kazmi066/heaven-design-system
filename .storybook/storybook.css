@@ -1,9 +1,3 @@
-/*
- * Shared styles for Storybook preview canvas & docs.
- * Used by Welcome + Foundations showcase stories.
- * Prefixed with .sb- to avoid clashing with component styles.
- */
-
 html,
 body,
 .sb-show-main {
@@ -139,7 +133,6 @@ body,
   margin: 0;
 }
 
-/* Color swatches */
 .sb-swatch {
   height: 72px;
   border-radius: 8px;
@@ -147,7 +140,6 @@ body,
   margin-bottom: 0.65rem;
 }
 
-/* Spacing / radius visual boxes */
 .sb-box {
   background: var(--hds-color-accent);
   opacity: 0.12;
@@ -160,7 +152,6 @@ body,
   border-radius: 4px;
 }
 
-/* Type specimen */
 .sb-type-row {
   display: grid;
   grid-template-columns: 110px 90px 1fr;
@@ -178,14 +169,12 @@ body,
   color: var(--hds-color-text-weaker);
 }
 
-/* Shadow card */
 .sb-shadow-card {
   height: 100px;
   border-radius: 10px;
   background: var(--hds-color-surface);
 }
 
-/* Motion */
 .sb-motion-dot {
   width: 24px;
   height: 24px;
@@ -193,7 +182,6 @@ body,
   background: var(--hds-color-accent);
 }
 
-/* Table-ish list */
 .sb-list {
   border: 1px solid var(--hds-color-border);
   border-radius: 10px;
@@ -234,7 +222,6 @@ body,
   background: var(--hds-color-surface);
 }
 
-/* Component showcase blocks (used by component stories) */
 .sb-showcase {
   display: flex;
   flex-wrap: wrap;
@@ -242,7 +229,6 @@ body,
   align-items: center;
 }
 
-/* Form grouping in component stories */
 .sb-form-sections {
   display: grid;
   gap: var(--hds-space-lg);

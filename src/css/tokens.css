@@ -1,13 +1,6 @@
-/*
- * Heaven Design System, Tokens
- */
-
 :root {
   color-scheme: light;
 
-  /* ═══════════════════════════════════════════════════════
-     COLORS, Brand & Semantic (Light Theme)
-  ═══════════════════════════════════════════════════════ */
   --hds-color-accent: #0070f3;
   --hds-color-primary: #09090b;
   --hds-color-secondary: #71717a;
@@ -45,7 +38,6 @@
   --hds-color-text-success: #047857;
   --hds-color-text-accent: #005fcc;
 
-  /* Text colors */
   --hds-color-text: #09090b;
   --hds-color-text-weak: #52525b;
   --hds-color-text-weaker: #71717a;
@@ -62,7 +54,6 @@
   --hds-color-text-on-info: #ffffff;
   --hds-color-text-progress: #0284c7;
 
-  /* Border colors */
   --hds-color-border: #e4e4e7;
   --hds-color-border-strong: #d4d4d8;
   --hds-color-border-neutral: #e4e4e7;
@@ -74,25 +65,19 @@
   --hds-color-border-progress: #bae6fd;
   --hds-color-border-hover: #a1a1aa;
 
-  /* Border styles */
   --hds-border-style-solid: solid;
   --hds-border-style-none: none;
   --hds-border-style-dashed: dashed;
   --hds-border-style-dotted: dotted;
 
-  /* Surface/UI colors */
   --hds-color-surface: #ffffff;
   --hds-color-surface-hover: #f4f4f5;
   --hds-color-surface-active: #e4e4e7;
   --hds-color-header: #ffffff;
 
-  /* Icon colors */
   --hds-color-icon: #71717a;
   --hds-color-icon-hover: #09090b;
 
-  /* ═══════════════════════════════════════════════════════
-     TYPOGRAPHY, Font families
-  ═══════════════════════════════════════════════════════ */
   --hds-font-family:
     "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --hds-font-family-title:
@@ -101,7 +86,6 @@
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
 
-  /* Font size scale (Fluid) */
   --hds-font-size-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
   --hds-font-size-sm: clamp(0.875rem, 0.84rem + 0.18vw, 0.9375rem);
   --hds-font-size-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
@@ -113,13 +97,11 @@
   --hds-font-size-4xl: clamp(3rem, 2.5rem + 2.5vw, 3.75rem);
   --hds-font-size-5xl: clamp(3.75rem, 3rem + 3.75vw, 4.5rem);
 
-  /* Font weights */
   --hds-font-weight-regular: 400;
   --hds-font-weight-medium: 500;
   --hds-font-weight-semibold: 600;
   --hds-font-weight-bold: 700;
 
-  /* Line heights */
   --hds-line-height-none: 1;
   --hds-line-height-tight: 1.25;
   --hds-line-height-snug: 1.375;
@@ -127,14 +109,10 @@
   --hds-line-height-relaxed: 1.625;
   --hds-line-height-loose: 2;
 
-  /* Letter spacing */
   --hds-letter-spacing-tight: -0.025em;
   --hds-letter-spacing-normal: 0em;
   --hds-letter-spacing-wide: 0.025em;
 
-  /* ═══════════════════════════════════════════════════════
-     SPACING, Fluid scale
-  ═══════════════════════════════════════════════════════ */
   --hds-space-2xs: clamp(0.25rem, 0.22rem + 0.15vw, 0.3125rem);
   --hds-space-xs: clamp(0.5rem, 0.45rem + 0.25vw, 0.625rem);
   --hds-space-sm: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
@@ -143,16 +121,12 @@
   --hds-space-xl: clamp(2rem, 1.75rem + 1.25vw, 2.5rem);
   --hds-space-2xl: clamp(3rem, 2.5rem + 2.5vw, 4rem);
 
-  /* One-up pairs */
   --hds-space-2xs-xs: clamp(0.25rem, 0.15rem + 0.5vw, 0.5rem);
   --hds-space-xs-sm: clamp(0.5rem, 0.375rem + 0.625vw, 0.75rem);
   --hds-space-sm-md: clamp(0.75rem, 0.625rem + 0.625vw, 1rem);
   --hds-space-md-lg: clamp(1rem, 0.75rem + 1.25vw, 1.5rem);
   --hds-space-lg-xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
 
-  /* ═══════════════════════════════════════════════════════
-     RADIUS
-  ═══════════════════════════════════════════════════════ */
   --hds-radius-none: 0px;
   --hds-radius-sm: 4px;
   --hds-radius-md: 6px;
@@ -160,23 +134,14 @@
   --hds-radius-xl: 12px;
   --hds-radius-full: 9999px;
 
-  /* ═══════════════════════════════════════════════════════
-     SHADOWS
-  ═══════════════════════════════════════════════════════ */
   --hds-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --hds-shadow-md:
     0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
 
-  /* ═══════════════════════════════════════════════════════
-     DARK MODE SHADOWS
-  ═══════════════════════════════════════════════════════ */
   --hds-shadow-dark-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   --hds-shadow-dark-md:
     0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5);
 
-  /* ═══════════════════════════════════════════════════════
-     Z-INDEX SCALE
-  ═══════════════════════════════════════════════════════ */
   --hds-z-0: 0;
   --hds-z-10: 10;
   --hds-z-20: 20;
@@ -188,9 +153,6 @@
   --hds-z-80: 80;
   --hds-z-90: 90;
 
-  /* ═══════════════════════════════════════════════════════
-     MOTION, Duration & Easing
-  ═══════════════════════════════════════════════════════ */
   --hds-duration-instant: 0ms;
   --hds-duration-fast: 100ms;
   --hds-duration-normal: 150ms;
@@ -203,9 +165,6 @@
   --hds-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --hds-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  /* ═══════════════════════════════════════════════════════
-     LAYOUT
-  ═══════════════════════════════════════════════════════ */
   --hds-max-width-sm: 640px;
   --hds-max-width-md: 768px;
   --hds-max-width-lg: 1024px;
@@ -214,21 +173,14 @@
 
   --hds-max-line-length: 65ch;
 
-  /* ═══════════════════════════════════════════════════════
-     Transitions
-  ═══════════════════════════════════════════════════════ */
   --hds-transition-fast: 100ms;
   --hds-transition-medium: 150ms;
   --hds-transition-slow: 250ms;
 }
 
-/* ═══════════════════════════════════════════════════════
-   DARK THEME 
-═══════════════════════════════════════════════════════ */
 [data-theme="dark"] {
   color-scheme: dark;
 
-  /* Brand & semantic colors */
   --hds-color-accent: #0070f3;
   --hds-color-primary: #f4f4f5;
   --hds-color-secondary: #a1a1aa;
@@ -237,7 +189,6 @@
   --hds-color-warning: #f59e0b;
   --hds-color-info: #0ea5e9;
 
-  /* Soft tints */
   --hds-color-neutral-soft: #27272a;
   --hds-color-text-on-neutral-soft: #e4e4e7;
   --hds-color-accent-soft: #1e3a8a;
@@ -251,14 +202,12 @@
   --hds-color-info-soft: #0c4a6e;
   --hds-color-text-on-info-soft: #bae6fd;
 
-  /* Focus ring and control outlines */
   --hds-color-focus: #60a5fa;
   --hds-color-border-control: #a1a1aa;
   --hds-color-text-danger: #fda4af;
   --hds-color-text-success: #6ee7b7;
   --hds-color-text-accent: #60a5fa;
 
-  /* Text colors */
   --hds-color-text: #f4f4f5;
   --hds-color-text-weak: #a1a1aa;
   --hds-color-text-weaker: #71717a;
@@ -275,7 +224,6 @@
   --hds-color-text-on-info: #ffffff;
   --hds-color-text-progress: #38bdf8;
 
-  /* Border colors */
   --hds-color-border: #27272a;
   --hds-color-border-strong: #3f3f46;
   --hds-color-border-neutral: #27272a;
@@ -287,17 +235,14 @@
   --hds-color-border-progress: #0c4a6e;
   --hds-color-border-hover: #52525b;
 
-  /* Surface/UI colors */
   --hds-color-surface: #09090b;
   --hds-color-surface-hover: #18181b;
   --hds-color-surface-active: #27272a;
   --hds-color-header: #09090b;
 
-  /* Icon colors */
   --hds-color-icon: #a1a1aa;
   --hds-color-icon-hover: #f4f4f5;
 
-  /* Shadows */
   --hds-shadow-sm: var(--hds-shadow-dark-sm);
   --hds-shadow-md: var(--hds-shadow-dark-md);
 }

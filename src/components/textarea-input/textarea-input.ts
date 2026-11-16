@@ -1,3 +1,4 @@
+import { setStringAttribute } from "../shared/field.js";
 import Template, { css } from "./textarea-input.template.js";
 import type { TextareaInputState } from "./textarea-input.types.js";
 
@@ -79,11 +80,7 @@ export class HdsTextareaInput extends HTMLElement {
   }
 
   set errorMessage(value: string) {
-    if (value) {
-      this.setAttribute("error-message", value);
-    } else {
-      this.removeAttribute("error-message");
-    }
+    setStringAttribute(this, "error-message", value);
   }
 
   get validity(): ValidityState {
