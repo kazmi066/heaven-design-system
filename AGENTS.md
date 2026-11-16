@@ -57,7 +57,7 @@ The goal is a design system that public-sector sites can adopt without accessibi
 
 ### Revamp status
 
-All ten components follow this direction. Use `hds-button` and the other components inside stories and demos instead of raw elements, so the look stays consistent.
+All eleven components follow this direction. Use `hds-button` and the other components inside stories and demos instead of raw elements, so the look stays consistent.
 
 ## Formatting
 

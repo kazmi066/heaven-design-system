@@ -43,6 +43,7 @@
   --hds-color-border-control: #71717a;
   --hds-color-text-danger: #be123c;
   --hds-color-text-success: #047857;
+  --hds-color-text-accent: #005fcc;
 
   /* Text colors */
   --hds-color-text: #09090b;
@@ -255,6 +256,7 @@
   --hds-color-border-control: #a1a1aa;
   --hds-color-text-danger: #fda4af;
   --hds-color-text-success: #6ee7b7;
+  --hds-color-text-accent: #60a5fa;
 
   /* Text colors */
   --hds-color-text: #f4f4f5;
