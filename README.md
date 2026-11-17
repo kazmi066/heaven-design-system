@@ -5,6 +5,7 @@ Heaven is a design system written in plain HTML and CSS, documented in Storybook
 ## Components
 
 - Accordion
+- Alert
 - Badge
 - Breadcrumbs
 - Button
